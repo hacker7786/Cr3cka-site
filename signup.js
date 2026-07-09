@@ -2,6 +2,11 @@
    CR3CKA SECURITY — signup.js
    ========================================================================== */
 
+import { auth } from "./firebase-config.js";
+
+import {
+createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 (function () {
   'use strict';
 
