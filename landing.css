@@ -1,0 +1,38 @@
+/* ==========================================================================
+   LANDING.CSS — page-specific accents for index.html
+   Layered on top of style.css; keeps hero/section flourishes out of the
+   shared core stylesheet so it stays reusable across auth pages too.
+   ========================================================================== */
+
+.hero::before,
+.hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  z-index: -1;
+  opacity: 0.28;
+  pointer-events: none;
+}
+.hero::before { width: 420px; height: 420px; background: var(--c-primary); top: 10%; left: -8%; }
+.hero::after { width: 380px; height: 380px; background: var(--c-accent); bottom: 0%; right: -6%; }
+
+#features, #resources { background: var(--c-bg-alt); }
+
+section#tools, section#github-tools { border-top: 1px solid var(--c-border); }
+
+.testimonial-track::before,
+.testimonial-track::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 120px;
+  height: 120px;
+  background: var(--c-secondary);
+  filter: blur(90px);
+  opacity: 0.18;
+  z-index: -1;
+  border-radius: 50%;
+}
+.testimonial-track::before { left: -40px; }
+.testimonial-track::after { right: -40px; background: var(--c-accent); }

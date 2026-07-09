@@ -1,0 +1,74 @@
+/* ==========================================================================
+   AUTH PAGES — login.html / signup.html
+   ========================================================================== */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 100px 20px 40px;
+  position: relative;
+}
+
+.auth-card {
+  width: 100%; max-width: 440px;
+  padding: 40px 36px;
+  border-radius: var(--radius-lg);
+  animation: fade-up 0.7s var(--ease);
+}
+
+.auth-head { text-align: center; margin-bottom: 30px; }
+.auth-head .logo { justify-content: center; margin-bottom: 18px; }
+.auth-head h1 { font-size: 1.5rem; margin-bottom: 6px; }
+.auth-head p { color: var(--c-text-dim); font-size: 0.9rem; }
+
+.auth-form .form-group { margin-bottom: 18px; }
+.auth-form label { font-size: 0.82rem; color: var(--c-text-dim); font-family: var(--f-mono); margin-bottom: 6px; display: block; }
+
+.input-wrap { position: relative; }
+.input-wrap svg.leading { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--c-text-faint); pointer-events: none; }
+.input-wrap input { width: 100%; padding: 12px 14px 12px 42px; border-radius: var(--radius-sm); background: var(--c-surface); border: 1px solid var(--c-border); color: var(--c-text); font-size: 0.92rem; transition: border-color var(--t-fast) var(--ease); }
+.input-wrap input:focus { border-color: var(--c-border-strong); }
+.input-wrap input.invalid { border-color: var(--c-danger); }
+.input-wrap input.valid { border-color: var(--c-primary); }
+.toggle-visibility { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--c-text-faint); }
+.toggle-visibility:hover { color: var(--c-secondary); }
+
+.field-error { font-size: 0.76rem; color: var(--c-danger); min-height: 16px; margin-top: 5px; display: block; }
+
+.auth-row { display: flex; align-items: center; justify-content: space-between; margin: 4px 0 22px; font-size: 0.86rem; }
+.checkbox-row { display: flex; align-items: center; gap: 8px; color: var(--c-text-dim); }
+.checkbox-row input { accent-color: var(--c-primary); width: 15px; height: 15px; }
+.auth-row a { color: var(--c-secondary); }
+.auth-row a:hover { text-decoration: underline; }
+
+.auth-form .btn { width: 100%; justify-content: center; position: relative; }
+.btn-spinner { display: none; width: 15px; height: 15px; border: 2px solid rgba(4,20,13,0.3); border-top-color: #04140d; border-radius: 50%; animation: spin 0.7s linear infinite; }
+.btn.loading .btn-spinner { display: inline-block; }
+.btn.loading .btn-label { opacity: 0.7; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.auth-divider { display: flex; align-items: center; gap: 14px; margin: 24px 0; color: var(--c-text-faint); font-size: 0.8rem; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--c-border); }
+
+.auth-social { display: flex; gap: 12px; }
+.auth-social button { flex: 1; padding: 11px; border-radius: var(--radius-sm); border: 1px solid var(--c-border); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.85rem; color: var(--c-text-dim); transition: all var(--t-fast) var(--ease); }
+.auth-social button:hover { border-color: var(--c-border-strong); color: var(--c-text); }
+
+.auth-foot { text-align: center; margin-top: 24px; font-size: 0.88rem; color: var(--c-text-dim); }
+.auth-foot a { color: var(--c-primary); font-weight: 600; }
+.auth-foot a:hover { text-decoration: underline; }
+
+/* Password strength meter */
+.strength-meter { display: flex; gap: 5px; margin-top: 8px; }
+.strength-meter .seg { flex: 1; height: 4px; border-radius: 999px; background: var(--c-surface); transition: background var(--t-fast) var(--ease); }
+.strength-label { font-size: 0.76rem; margin-top: 6px; color: var(--c-text-faint); font-family: var(--f-mono); }
+.strength-meter.s1 .seg:nth-child(1) { background: var(--c-danger); }
+.strength-meter.s2 .seg:nth-child(-n+2) { background: var(--c-warning); }
+.strength-meter.s3 .seg:nth-child(-n+3) { background: var(--c-secondary); }
+.strength-meter.s4 .seg { background: var(--c-primary); }
+
+/* Floating background accents for auth pages */
+.auth-orb { position: fixed; border-radius: 50%; filter: blur(90px); z-index: -1; opacity: 0.35; animation: float-orb 12s ease-in-out infinite; }
+.auth-orb.o1 { width: 380px; height: 380px; background: var(--c-primary); top: -100px; left: -100px; }
+.auth-orb.o2 { width: 320px; height: 320px; background: var(--c-accent); bottom: -80px; right: -80px; animation-delay: -6s; }
+@keyframes float-orb { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, -20px); } }
