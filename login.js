@@ -2,6 +2,12 @@
    CR3CKA SECURITY — login.js
    ========================================================================== */
 
+import { auth } from "./firebase-config.js";
+
+import {
+signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
 (function () {
   'use strict';
 
