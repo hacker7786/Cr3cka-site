@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CR3CKA Security — Ethical Hacking, Pentesting &amp; OSINT</title>
+<meta name="description" content="CR3CKA Security is a cybersecurity portfolio and learning platform covering ethical hacking, penetration testing, OSINT, digital forensics, cloud security and AI security." />
+<meta name="keywords" content="cybersecurity, ethical hacking, penetration testing, OSINT, digital forensics, cloud security, red team, blue team, CR3CKA" />
+<meta name="author" content="CR3CKA Security" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://cr3cka.dev/" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="CR3CKA Security — Ethical Hacking, Pentesting & OSINT" />
+<meta property="og:description" content="A premium cybersecurity portfolio and learning platform: tools, research, and resources for ethical hacking, pentesting and defensive security." />
+<meta property="og:url" content="https://cr3cka.dev/" />
+<meta property="og:image" content="assets/images/og-cover.png" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="CR3CKA Security" />
+<meta name="twitter:description" content="Ethical hacking, penetration testing, OSINT, digital forensics, cloud security and AI security." />
+<meta name="twitter:image" content="assets/images/og-cover.png" />
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "CR3CKA Security",
+  "url": "https://cr3cka.dev/",
+  "description": "Cybersecurity portfolio and learning platform covering ethical hacking, penetration testing, OSINT, digital forensics, cloud security and AI security.",
+  "sameAs": [
+    "https://github.com/cr3cka",
+    "https://linkedin.com/company/cr3cka"
+  ]
+}
+</script>
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2305070d'/><text x='50' y='68' font-size='60' text-anchor='middle' fill='%2300ff88' font-family='monospace'>C</text></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/landing.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+<!-- Loading screen -->
+<div id="loading-screen" aria-hidden="true">
+  <div class="loader-logo">CR3CKA<span>_</span>SECURITY</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- Background layers -->
+<div class="cyber-grid" aria-hidden="true"></div>
+<canvas id="matrix-canvas" aria-hidden="true"></canvas>
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<!-- ===================== NAVBAR ===================== -->
+<header class="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="logo">
+      <span class="logo-mark">C</span>
+      <span class="logo-text">CR3CKA<span>_</span>SEC</span>
+    </a>
+
+    <nav class="nav-links" id="nav-links">
+      <a href="#home" class="active">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#github-tools">GitHub Tools</a>
+      <a href="#projects">Projects</a>
+      <a href="#blog">Blog</a>
+      <a href="#resources">Resources</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Switch to light mode">
+        <span data-icon>☀️</span>
+      </button>
+      <a href="login.html" class="btn btn-ghost hide-mobile">Login</a>
+      <a href="signup.html" class="btn btn-outline btn-sm">Sign Up</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">Systems online</div>
+      <h1 class="hero-title"><span class="g1">CR3CKA</span> <span class="g2">SECURITY</span></h1>
+
+      <div class="hero-sub-list">
+        <span class="tag">Ethical Hacking</span>
+        <span class="tag">Penetration Testing</span>
+        <span class="tag">OSINT</span>
+        <span class="tag">Digital Forensics</span>
+        <span class="tag">Cloud Security</span>
+        <span class="tag">AI Security</span>
+      </div>
+
+      <p class="hero-desc">I break things on purpose so real attackers can't. A portfolio, tool library, and research hub built for defenders who read the source before they trust the CVE.</p>
+
+      <div class="hero-actions">
+        <a href="signup.html" class="btn btn-primary">Get Started</a>
+        <a href="#tools" class="btn btn-outline">Explore Tools</a>
+        <a href="https://github.com/cr3cka" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
+        <a href="#contact" class="btn btn-ghost">Contact →</a>
+      </div>
+
+      <div class="hero-stats">
+        <div><div class="stat-num">120+</div><div class="stat-label">Assessments</div></div>
+        <div><div class="stat-num">40+</div><div class="stat-label">Open-source tools</div></div>
+        <div><div class="stat-num">6</div><div class="stat-label">Years in field</div></div>
+      </div>
+    </div>
+
+    <div class="terminal glass" data-reveal>
+      <div class="terminal-head">
+        <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+        <span class="terminal-title">cr3cka@sec:~</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="prompt">$</span>whoami</div>
+        <div class="terminal-line out">cr3cka — offensive &amp; defensive security</div>
+        <div class="terminal-line"><span class="prompt">$</span>cat mission.txt</div>
+        <div class="terminal-line out">Find the flaw before someone with worse intentions does.</div>
+        <div class="terminal-line"><span class="prompt">$</span><span id="typed-cmd"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="mouse"></div>
+  </div>
+</section>
+
+<!-- ===================== FEATURES ===================== -->
+<section id="features">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <div class="eyebrow">Capabilities</div>
+      <h2 class="section-title">Disciplines I operate in</h2>
+      <p class="section-sub">Every engagement pulls from a mix of these. None of them exist in isolation.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6z"/></svg></div>
+        <h3>Ethical Hacking</h3>
+        <p>Authorized offensive testing that mirrors real adversary tradecraft.</p>
+      </div>
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18z"/></svg></div>
+        <h3>Network Security</h3>
+        <p>Segmentation review, firewall audits, and traffic-pattern analysis.</p>
+      </div>
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
+        <h3>Web Security</h3>
+        <p>OWASP-aligned application testing from auth flows to business logic.</p>
+      </div>
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></div>
+        <h3>OSINT</h3>
+        <p>Mapping public attack surface before an attacker does it for you.</p>
+      </div>
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 15a4 4 0 004 4h10a4 4 0 000-8 5 5 0 00-9.6-2A4 4 0 003 15z"/></svg></div>
+        <h3>Cloud Security</h3>
+        <p>IAM review, misconfiguration hunts, and container/image scanning.</p>
+      </div>
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"/></svg></div>
+        <h3>Digital Forensics</h3>
+        <p>Memory and disk analysis that reconstructs what actually happened.</p>
+      </div>
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4M15 3h4a2 2 0 012 2v4M9 21H5a2 2 0 01-2-2v-4M15 21h4a2 2 0 002-2v-4"/></svg></div>
+        <h3>Reverse Engineering</h3>
+        <p>Taking binaries apart to understand exactly what they do.</p>
+      </div>
+      <div class="feature-card glass" data-reveal>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg></div>
+        <h3>Malware Analysis</h3>
+        <p>Static and dynamic triage of samples in an isolated, controlled lab.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about">
+  <div class="container about-grid">
+    <div class="about-copy" data-reveal>
+      <div class="eyebrow">About</div>
+      <h2>Security work should hold up under pressure — not just in a demo.</h2>
+      <p>CR3CKA Security started as a personal lab for breaking down how real intrusions happen, and grew into a full practice spanning offensive testing, defensive tooling, and research writing.</p>
+      <p>My mission is simple: give teams an honest, adversary-informed view of their exposure — and the tooling to keep closing gaps after the engagement ends. My vision is a security culture where defenders move as fast as attackers, because they understand the same techniques.</p>
+
+      <div class="pillar-row">
+        <div class="pillar glass"><strong>Mission</strong><span>Find real risk, explain it clearly, fix it fast.</span></div>
+        <div class="pillar glass"><strong>Vision</strong><span>Defense that's proactive, not reactive.</span></div>
+      </div>
+
+      <div class="skills-bars">
+        <div>
+          <div class="skill-bar-row"><span>Penetration Testing</span><span>94%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="94%"></div></div>
+        </div>
+        <div>
+          <div class="skill-bar-row"><span>OSINT &amp; Recon</span><span>90%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90%"></div></div>
+        </div>
+        <div>
+          <div class="skill-bar-row"><span>Cloud &amp; Container Security</span><span>85%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85%"></div></div>
+        </div>
+        <div>
+          <div class="skill-bar-row"><span>Digital Forensics</span><span>80%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-reveal>
+      <div class="eyebrow">Journey</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-year">2019</span>
+          <h4>First CTF, first rabbit hole</h4>
+          <p>Started with capture-the-flag challenges and never really stopped.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2021</span>
+          <h4>OSCP-style methodology</h4>
+          <p>Formalized a testing methodology around real-world enterprise networks.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2023</span>
+          <h4>Cloud &amp; container focus</h4>
+          <p>Shifted a large part of the practice toward cloud misconfig and IAM review.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2025</span>
+          <h4>AI security research</h4>
+          <p>Began researching prompt-injection and model-abuse defenses for LLM products.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">Now</span>
+          <h4>CR3CKA Security</h4>
+          <p>Full-time practice: assessments, tooling, and public research writing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TOOLS ===================== -->
+<section id="tools">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <div class="eyebrow">Quick Reference</div>
+      <h2 class="section-title">Tools &amp; Commands</h2>
+      <p class="section-sub">Searchable, filterable command references for authorized security assessments. Copy and go.</p>
+    </div>
+
+    <div class="tools-toolbar">
+      <div class="tools-search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="tools-search-input" placeholder="Search tools, commands, categories…" aria-label="Search tools" />
+      </div>
+      <div class="tools-filters" id="tools-filters"></div>
+      <button class="filter-chip" id="fav-toggle" aria-label="Show favorites only">★ Favorites</button>
+    </div>
+
+    <div class="tools-grid" id="tools-grid"></div>
+    <div class="tools-empty" id="tools-empty">No tools match your search — try another keyword or category.</div>
+  </div>
+</section>
+
+<!-- ===================== GITHUB TOOLS ===================== -->
+<section id="github-tools">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <div class="eyebrow">Open Source</div>
+      <h2 class="section-title">GitHub Security Tools</h2>
+      <p class="section-sub">A curated set of respected, actively maintained tools for legitimate security assessment, research, and defense.</p>
+    </div>
+    <div class="gh-grid" id="gh-grid"></div>
+  </div>
+</section>
+
+<!-- ===================== PROJECTS ===================== -->
+<section id="projects">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <div class="eyebrow">Portfolio</div>
+      <h2 class="section-title">Selected Projects</h2>
+      <p class="section-sub">Tooling and research I've built and shipped publicly.</p>
+    </div>
+
+    <div class="project-grid">
+      <article class="project-card glass" data-reveal>
+        <div class="project-thumb"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l8 4v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6z"/></svg></div>
+        <div class="project-body">
+          <span class="project-status live">Live</span>
+          <h3>Recon Pipeline</h3>
+          <p>Automated subdomain-to-vuln pipeline chaining subfinder, httpx and nuclei.</p>
+          <div class="project-stack"><span>Go</span><span>Bash</span><span>Docker</span></div>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/cr3cka" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="#" target="_blank" rel="noopener">Demo ↗</a>
+        </div>
+      </article>
+
+      <article class="project-card glass" data-reveal>
+        <div class="project-thumb"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></div>
+        <div class="project-body">
+          <span class="project-status live">Live</span>
+          <h3>OSINT Correlator</h3>
+          <p>Aggregates public data sources into a single graph of exposed assets.</p>
+          <div class="project-stack"><span>Python</span><span>Neo4j</span></div>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/cr3cka" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="#" target="_blank" rel="noopener">Demo ↗</a>
+        </div>
+      </article>
+
+      <article class="project-card glass" data-reveal>
+        <div class="project-thumb"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 15a4 4 0 004 4h10a4 4 0 000-8 5 5 0 00-9.6-2A4 4 0 003 15z"/></svg></div>
+        <div class="project-body">
+          <span class="project-status dev">In Development</span>
+          <h3>Cloud Config Auditor</h3>
+          <p>Scans IaC templates for common cloud misconfigurations before deploy.</p>
+          <div class="project-stack"><span>TypeScript</span><span>AWS</span></div>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/cr3cka" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </article>
+
+      <article class="project-card glass" data-reveal>
+        <div class="project-thumb"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 8v4l3 3M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg></div>
+        <div class="project-body">
+          <span class="project-status live">Live</span>
+          <h3>Malware Triage Notebook</h3>
+          <p>Jupyter-based static/dynamic triage workflow for sample analysis.</p>
+          <div class="project-stack"><span>Python</span><span>YARA</span></div>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/cr3cka" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </article>
+
+      <article class="project-card glass" data-reveal>
+        <div class="project-thumb"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H5a2 2 0 00-2 2v4M15 3h4a2 2 0 012 2v4"/></svg></div>
+        <div class="project-body">
+          <span class="project-status archived">Archived</span>
+          <h3>CTF Writeup Archive</h3>
+          <p>Two years of documented CTF solutions across web, pwn, and crypto.</p>
+          <div class="project-stack"><span>Markdown</span></div>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/cr3cka" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </article>
+
+      <article class="project-card glass" data-reveal>
+        <div class="project-thumb"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg></div>
+        <div class="project-body">
+          <span class="project-status dev">In Development</span>
+          <h3>LLM Prompt-Injection Test Suite</h3>
+          <p>A growing benchmark for probing AI product defenses against abuse.</p>
+          <div class="project-stack"><span>Python</span><span>LLM APIs</span></div>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/cr3cka" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOG ===================== -->
+<section id="blog">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <div class="eyebrow">Research</div>
+      <h2 class="section-title">Latest Writing</h2>
+      <p class="section-sub">Notes from the field — techniques, retrospectives, and defensive guidance.</p>
+    </div>
+
+    <div class="blog-grid">
+      <article class="blog-card glass" data-reveal>
+        <div class="blog-thumb"></div>
+        <div class="blog-body">
+          <span class="blog-tag">Cloud Security</span>
+          <h3>Five IAM misconfigurations I still find every engagement</h3>
+          <p>The patterns that keep showing up across otherwise mature cloud environments.</p>
+          <div class="blog-meta"><span>Jun 18, 2026</span><span>6 min read</span></div>
+        </div>
+      </article>
+      <article class="blog-card glass" data-reveal>
+        <div class="blog-thumb"></div>
+        <div class="blog-body">
+          <span class="blog-tag">OSINT</span>
+          <h3>Building a recon pipeline without losing signal in noise</h3>
+          <p>How to chain subfinder, httpx and nuclei without drowning in false positives.</p>
+          <div class="blog-meta"><span>May 30, 2026</span><span>8 min read</span></div>
+        </div>
+      </article>
+      <article class="blog-card glass" data-reveal>
+        <div class="blog-thumb"></div>
+        <div class="blog-body">
+          <span class="blog-tag">AI Security</span>
+          <h3>Prompt injection is just untrusted input, and we're relearning that</h3>
+          <p>Old web-security lessons, new attack surface — what actually transfers.</p>
+          <div class="blog-meta"><span>May 12, 2026</span><span>7 min read</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RESOURCES ===================== -->
+<section id="resources">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <div class="eyebrow">Learn</div>
+      <h2 class="section-title">Learning Roadmap</h2>
+      <p class="section-sub">The order I'd recommend if you're starting from zero.</p>
+    </div>
+
+    <div class="roadmap-grid">
+      <div class="roadmap-card glass" data-reveal>
+        <h3>🐧 Linux</h3>
+        <ul><li>Filesystem &amp; permissions</li><li>Shell scripting</li><li>Process &amp; service management</li><li>Package managers</li></ul>
+      </div>
+      <div class="roadmap-card glass" data-reveal>
+        <h3>🌐 Networking</h3>
+        <ul><li>TCP/IP fundamentals</li><li>DNS &amp; routing</li><li>Packet analysis</li><li>Firewalls &amp; VPNs</li></ul>
+      </div>
+      <div class="roadmap-card glass" data-reveal>
+        <h3>🐍 Python</h3>
+        <ul><li>Scripting fundamentals</li><li>Automation &amp; APIs</li><li>Parsing &amp; regex</li><li>Building simple tools</li></ul>
+      </div>
+      <div class="roadmap-card glass" data-reveal>
+        <h3>🔓 Web Security</h3>
+        <ul><li>OWASP Top 10</li><li>Auth &amp; session flaws</li><li>Injection classes</li><li>Business-logic testing</li></ul>
+      </div>
+      <div class="roadmap-card glass" data-reveal>
+        <h3>📋 OWASP</h3>
+        <ul><li>Testing Guide</li><li>ASVS checklist</li><li>Cheat sheet series</li><li>Dependency-Check</li></ul>
+      </div>
+      <div class="roadmap-card glass" data-reveal>
+        <h3>🎯 Bug Bounty</h3>
+        <ul><li>Scope &amp; rules of engagement</li><li>Recon methodology</li><li>Report writing</li><li>Triage &amp; disclosure</li></ul>
+      </div>
+      <div class="roadmap-card glass" data-reveal>
+        <h3>🛡️ Blue Team</h3>
+        <ul><li>Log analysis</li><li>SIEM fundamentals</li><li>Incident response</li><li>Threat hunting</li></ul>
+      </div>
+      <div class="roadmap-card glass" data-reveal>
+        <h3>🗡️ Red Team</h3>
+        <ul><li>Attack-chain planning</li><li>Living-off-the-land</li><li>Evasion basics</li><li>Reporting &amp; debrief</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STATS ===================== -->
+<section class="stats-band">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item" data-reveal><div class="num" data-counter="48">0</div><div class="lbl">Projects Shipped</div></div>
+      <div class="stat-item" data-reveal><div class="num" data-counter="40" data-suffix="+">0</div><div class="lbl">Tools Catalogued</div></div>
+      <div class="stat-item" data-reveal><div class="num" data-counter="9800" data-suffix="+">0</div><div class="lbl">GitHub Stars Referenced</div></div>
+      <div class="stat-item" data-reveal><div class="num" data-counter="6" data-suffix=" yrs">0</div><div class="lbl">Experience</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TESTIMONIALS ===================== -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-head" data-reveal style="text-align:center; margin-left:auto; margin-right:auto;">
+      <div class="eyebrow" style="justify-content:center;">Feedback</div>
+      <h2 class="section-title">What clients say</h2>
+    </div>
+
+    <div class="testimonial-track" data-reveal>
+      <div class="testimonial-slide glass">
+        <p class="testimonial-quote">"The report didn't just list findings — it explained exactly how an attacker would chain them. That context changed how we prioritized fixes."</p>
+        <div class="testimonial-person">
+          <div class="testimonial-avatar">RS</div>
+          <div>
+            <div class="testimonial-name">Rina S.</div>
+            <div class="testimonial-role">CTO, fintech startup</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-slide glass">
+        <p class="testimonial-quote">"Fast, thorough, and refreshingly clear communication throughout the engagement. Our cloud posture is measurably better."</p>
+        <div class="testimonial-person">
+          <div class="testimonial-avatar">DK</div>
+          <div>
+            <div class="testimonial-name">David K.</div>
+            <div class="testimonial-role">Head of Platform Eng.</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-slide glass">
+        <p class="testimonial-quote">"CR3CKA found a business-logic flaw two other vendors missed entirely. Worth every hour of the engagement."</p>
+        <div class="testimonial-person">
+          <div class="testimonial-avatar">AM</div>
+          <div>
+            <div class="testimonial-name">Amara M.</div>
+            <div class="testimonial-role">Security Lead, SaaS co.</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-dots" id="testimonial-dots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact">
+  <div class="container contact-grid">
+    <div class="contact-info" data-reveal>
+      <div class="eyebrow">Get in touch</div>
+      <h2 class="section-title">Let's talk security</h2>
+      <p class="section-sub">Open to assessments, consulting, and collaboration on defensive tooling.</p>
+
+      <div class="contact-item">
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 016 0C17 4.7 18 5 18 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.7 5.6-5.4 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0012 .3z"/></svg></div>
+        <div><strong>GitHub</strong><a href="https://github.com/cr3cka" target="_blank" rel="noopener">github.com/cr3cka</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 3.6H3.6A1.6 1.6 0 002 5.2v13.6a1.6 1.6 0 001.6 1.6h16.8a1.6 1.6 0 001.6-1.6V5.2a1.6 1.6 0 00-1.6-1.6zM8 18.4H5.4V9.9H8zM6.7 8.8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm11.7 9.6h-2.6v-4.1c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7v4.1H10.5s.1-7.4 0-8.5h2.6v1.2a2.6 2.6 0 012.3-1.3c1.7 0 3 1.1 3 3.5z"/></svg></div>
+        <div><strong>LinkedIn</strong><a href="https://linkedin.com/company/cr3cka" target="_blank" rel="noopener">linkedin.com/company/cr3cka</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></div>
+        <div><strong>Email</strong><a href="mailto:contact@cr3cka.dev">contact@cr3cka.dev</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><strong>Location</strong><span>Remote — available worldwide</span></div>
+      </div>
+    </div>
+
+    <form class="contact-form glass" id="contact-form" data-reveal style="padding:32px; border-radius:20px;" novalidate>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="c-name">Full name</label>
+          <input type="text" id="c-name" name="name" placeholder="Jane Doe" />
+          <span class="form-error" id="c-name-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="c-email">Email</label>
+          <input type="email" id="c-email" name="email" placeholder="jane@company.com" />
+          <span class="form-error" id="c-email-error"></span>
+        </div>
+        <div class="form-group full">
+          <label for="c-subject">Subject</label>
+          <input type="text" id="c-subject" name="subject" placeholder="Penetration test inquiry" />
+        </div>
+        <div class="form-group full">
+          <label for="c-message">Message</label>
+          <textarea id="c-message" name="message" placeholder="Tell me about your project or engagement…"></textarea>
+          <span class="form-error" id="c-message-error"></span>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <span class="btn-label">Send Message</span>
+        <span class="btn-spinner"></span>
+      </button>
+      <div class="form-status" id="contact-status"></div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="logo"><span class="logo-mark">C</span><span class="logo-text">CR3CKA<span>_</span>SEC</span></a>
+        <p>A cybersecurity portfolio and learning platform covering offensive testing, defensive tooling, and public research.</p>
+        <div class="social-icons">
+          <a href="https://github.com/cr3cka" target="_blank" rel="noopener" aria-label="GitHub"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 016 0C17 4.7 18 5 18 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.7 5.6-5.4 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0012 .3z"/></svg></a>
+          <a href="https://linkedin.com/company/cr3cka" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 3.6H3.6A1.6 1.6 0 002 5.2v13.6a1.6 1.6 0 001.6 1.6h16.8a1.6 1.6 0 001.6-1.6V5.2a1.6 1.6 0 00-1.6-1.6zM8 18.4H5.4V9.9H8zM6.7 8.8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm11.7 9.6h-2.6v-4.1c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7v4.1H10.5s.1-7.4 0-8.5h2.6v1.2a2.6 2.6 0 012.3-1.3c1.7 0 3 1.1 3 3.5z"/></svg></a>
+          <a href="mailto:contact@cr3cka.dev" aria-label="Email"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#tools">Tools</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#resources">Learning Roadmap</a></li>
+          <li><a href="#github-tools">GitHub Tools</a></li>
+          <li><a href="signup.html">Create Account</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <p style="color:var(--c-text-dim); font-size:0.85rem; margin-bottom:12px;">Occasional research notes. No spam.</p>
+        <form class="newsletter-form" id="newsletter-form" novalidate>
+          <input type="email" placeholder="you@email.com" aria-label="Email for newsletter" />
+          <button type="submit" class="btn btn-primary btn-sm">Join</button>
+        </form>
+        <div id="newsletter-msg" style="font-size:0.78rem; margin-top:8px;"></div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 CR3CKA Security. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="back-to-top" class="glass" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="js/animations.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
