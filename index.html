@@ -541,8 +541,11 @@
                NMAP & GITHUB (Summarized for context)
             ========================================= */
             { name: "Nmap: Stealth", cat: "nmap", desc: "SYN Scan.", usage: "nmap -sS [IP]" },
+            { name: "Nmap: Script Scan", cat: "nmap", desc: "scan the script of any ip.", usage: "nmap -sC [IP]" },
             { name: "Nmap: OS Detect", cat: "nmap", desc: "OS Fingerprint.", usage: "nmap -O [IP]" },
             { name: "Nmap: Vuln", cat: "nmap", desc: "Vuln Scripts.", usage: "nmap --script vuln [IP]" },
+            { name: "Nmap: Aggressive Scan", cat: "nmap", desc: "Enables Aggressive Scan.", usage: "nmap -A [IP]" },
+            { name: "Nmap: Powerfull scanning", cat: "nmap", desc: "Run this command and collect large number of informations.", usage: "nmap -sS -sV -sC -O -A -p- [IP]" },
             { name: "Sherlock", cat: "github", desc: "Social Media Hunt.", usage: "python3 sherlock.py user", link: "https://github.com/sherlock-project/sherlock" },
             { name: "CamPhish", cat: "github", desc: "Phishing Camera.", usage: "./camphish.sh", link: "https://github.com/techchipnet/CamPhish" }
          ]
