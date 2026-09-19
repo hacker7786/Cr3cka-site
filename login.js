@@ -1,76 +1,401 @@
-/* ==========================================================================
-   CR3CKA SECURITY — login.js
-   ========================================================================== */
+"use strict";
 
-import { auth } from "./firebase-config.js";
+/*
+ * =========================================================
+ * CR3CKA SECURITY
+ * Futuristic Login Controller
+ *
+ * IMPORTANT:
+ * This file handles the login UI and client-side validation.
+ *
+ * REAL authentication MUST be performed by your backend.
+ * Never store plaintext passwords in frontend JavaScript.
+ * =========================================================
+ */
 
-import {
-signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-(function () {
-  'use strict';
+// =========================================================
+// HELPERS
+// =========================================================
 
-  const form = document.getElementById('login-form');
-  if (!form) return;
+const $ = (selector) => document.querySelector(selector);
 
-  const emailInput = document.getElementById('login-email');
-  const passInput = document.getElementById('login-password');
-  const toggleBtn = document.getElementById('toggle-login-password');
-  const submitBtn = document.getElementById('login-submit');
-  const status = document.getElementById('login-status');
+const delay = (ms) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
 
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const isPassword = passInput.type === 'password';
-      passInput.type = isPassword ? 'text' : 'password';
-      toggleBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
-      toggleBtn.innerHTML = isPassword ? eyeOffIcon() : eyeIcon();
-    });
-  }
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let valid = true;
+// =========================================================
+// ELEMENTS
+// =========================================================
 
-    valid = validate(emailInput, /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim()), 'Enter a valid email address') && valid;
-    valid = validate(passInput, passInput.value.length >= 8, 'Password must be at least 8 characters') && valid;
+const form = $("#login-form");
 
-    if (!valid) {
-      status.textContent = 'Please correct the errors above.';
-      status.className = 'form-status error';
-      return;
+const identityInput = $("#login-identity");
+const passwordInput = $("#login-password");
+
+const rememberInput = $("#login-remember");
+
+const submitButton = $("#login-submit");
+
+const googleButton = $("#google-login");
+
+const passwordToggle = $("#toggle-login-password");
+
+const statusBox = $("#login-status");
+
+
+// =========================================================
+// STATUS SYSTEM
+// =========================================================
+
+function setStatus(message, type = "info") {
+
+    statusBox.textContent = message;
+
+    statusBox.className = `status ${type}`;
+}
+
+
+// =========================================================
+// IDENTITY VALIDATION
+// =========================================================
+
+function validateIdentity(value) {
+
+    const identity = value.trim();
+
+    if (!identity) {
+        return "IDENTITY FIELD REQUIRED";
     }
 
-    submitBtn.classList.add('loading');
-    submitBtn.disabled = true;
-    status.textContent = '';
+    if (identity.length < 3) {
+        return "IDENTITY TOO SHORT";
+    }
 
-    setTimeout(() => {
-      submitBtn.classList.remove('loading');
-      submitBtn.disabled = false;
-      status.textContent = 'Signed in successfully. Redirecting to your dashboard…';
-      status.className = 'form-status success';
-      setTimeout(() => { window.location.href = 'dashboard.html'; }, 900);
-    }, 1200);
-  });
+    return null;
+}
 
-  [emailInput, passInput].forEach((el) => {
-    el.addEventListener('input', () => el.classList.remove('invalid'));
-  });
 
-  function validate(input, condition, message) {
-    const errEl = document.getElementById(input.id + '-error');
-    input.classList.toggle('invalid', !condition);
-    input.classList.toggle('valid', condition);
-    if (errEl) errEl.textContent = condition ? '' : message;
-    return condition;
-  }
+// =========================================================
+// PASSWORD VALIDATION
+// =========================================================
 
-  function eyeIcon() {
-    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
-  }
-  function eyeOffIcon() {
-    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.9 17.9A10.9 10.9 0 0112 20c-7 0-11-8-11-8a19.5 19.5 0 015.1-6.2M9.9 4.2A10.6 10.6 0 0112 4c7 0 11 8 11 8a19.6 19.6 0 01-3.3 4.4M14.1 14.1a3 3 0 11-4.2-4.2"/><path d="M1 1l22 22"/></svg>';
-  }
-})();
+function validatePassword(value) {
+
+    if (!value) {
+        return "ACCESS KEY REQUIRED";
+    }
+
+    if (value.length < 8) {
+        return "ACCESS KEY MUST CONTAIN 8+ CHARACTERS";
+    }
+
+    return null;
+}
+
+
+// =========================================================
+// PASSWORD VISIBILITY
+// =========================================================
+
+passwordToggle.addEventListener("click", () => {
+
+    const isPassword =
+        passwordInput.type === "password";
+
+    passwordInput.type =
+        isPassword ? "text" : "password";
+
+    passwordToggle.textContent =
+        isPassword ? "HIDE" : "SHOW";
+
+});
+
+
+// =========================================================
+// INPUT FEEDBACK
+// =========================================================
+
+identityInput.addEventListener("input", () => {
+
+    if (statusBox.classList.contains("error")) {
+        setStatus("");
+    }
+
+});
+
+
+passwordInput.addEventListener("input", () => {
+
+    if (statusBox.classList.contains("error")) {
+        setStatus("");
+    }
+
+});
+
+
+// =========================================================
+// GOOGLE LOGIN
+// =========================================================
+
+googleButton.addEventListener("click", async () => {
+
+    setStatus(
+        "INITIALIZING GOOGLE AUTHENTICATION...",
+        "info"
+    );
+
+    googleButton.disabled = true;
+
+    await delay(700);
+
+    /*
+     * =====================================================
+     * REAL GOOGLE AUTHENTICATION
+     * =====================================================
+     *
+     * Replace this section with Google Identity Services
+     * or your backend OAuth endpoint.
+     *
+     * Example:
+     *
+     * window.location.href =
+     *     "/api/auth/google";
+     *
+     * Your backend should then:
+     *
+     * 1. Start Google OAuth
+     * 2. Receive Google's callback
+     * 3. Verify the identity server-side
+     * 4. Create/login the user
+     * 5. Establish a secure session
+     *
+     * NEVER put a Google Client Secret here.
+     */
+
+
+    setStatus(
+        "GOOGLE AUTH READY // OAUTH BACKEND REQUIRED",
+        "info"
+    );
+
+    googleButton.disabled = false;
+
+});
+
+
+// =========================================================
+// LOGIN PROCESS
+// =========================================================
+
+form.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+
+    const identity =
+        identityInput.value.trim();
+
+    const password =
+        passwordInput.value;
+
+
+    // ---------------------------------------------
+    // VALIDATE IDENTITY
+    // ---------------------------------------------
+
+    const identityError =
+        validateIdentity(identity);
+
+    if (identityError) {
+
+        setStatus(
+            `✕ ${identityError}`,
+            "error"
+        );
+
+        identityInput.focus();
+
+        return;
+    }
+
+
+    // ---------------------------------------------
+    // VALIDATE PASSWORD
+    // ---------------------------------------------
+
+    const passwordError =
+        validatePassword(password);
+
+    if (passwordError) {
+
+        setStatus(
+            `✕ ${passwordError}`,
+            "error"
+        );
+
+        passwordInput.focus();
+
+        return;
+    }
+
+
+    // ---------------------------------------------
+    // START AUTHENTICATION
+    // ---------------------------------------------
+
+    submitButton.disabled = true;
+
+    submitButton.textContent =
+        "AUTHENTICATING...";
+
+
+    setStatus(
+        "ESTABLISHING ENCRYPTED SESSION...",
+        "info"
+    );
+
+
+    await delay(900);
+
+
+    /*
+     * =====================================================
+     * REAL BACKEND LOGIN
+     * =====================================================
+     *
+     * Replace the simulation below with:
+     *
+     * const response = await fetch("/api/auth/login", {
+     *
+     *     method: "POST",
+     *
+     *     headers: {
+     *         "Content-Type": "application/json"
+     *     },
+     *
+     *     body: JSON.stringify({
+     *         identity,
+     *         password,
+     *         remember: rememberInput.checked
+     *     })
+     * });
+     *
+     * const data = await response.json();
+     *
+     * if (!response.ok) {
+     *     throw new Error(
+     *         data.message || "Authentication failed"
+     *     );
+     * }
+     *
+     * IMPORTANT:
+     * The backend should verify the password against a
+     * secure password hash such as Argon2id or bcrypt.
+     *
+     * Prefer an HttpOnly + Secure + SameSite session cookie
+     * instead of storing authentication tokens in localStorage.
+     * =====================================================
+     */
+
+
+    // -----------------------------------------------------
+    // DEMO RESPONSE
+    // -----------------------------------------------------
+
+    await delay(800);
+
+
+    setStatus(
+        "✓ AUTHENTICATION BACKEND NOT CONNECTED",
+        "info"
+    );
+
+
+    submitButton.disabled = false;
+
+    submitButton.textContent =
+        "INITIALIZE SECURE SESSION";
+
+});
+
+
+// =========================================================
+// FORGOT PASSWORD
+// =========================================================
+
+$("#forgot-password").addEventListener("click", (event) => {
+
+    /*
+     * Change this URL when your backend recovery system
+     * is ready.
+     */
+
+    if (
+        !event.currentTarget.getAttribute("href") ||
+        event.currentTarget.getAttribute("href") === "#"
+    ) {
+
+        event.preventDefault();
+
+        setStatus(
+            "PASSWORD RECOVERY MODULE OFFLINE",
+            "error"
+        );
+
+    }
+
+});
+
+
+// =========================================================
+// ENTER / CTRL + ENTER
+// =========================================================
+
+document.addEventListener("keydown", (event) => {
+
+    if (
+        event.key === "Enter" &&
+        event.ctrlKey
+    ) {
+
+        form.requestSubmit();
+
+    }
+
+});
+
+
+// =========================================================
+// SECURITY-STYLE BOOT LOG
+// =========================================================
+
+console.log(
+    "%c CR3CKA SECURITY ",
+    "background:#00ff88;color:#00150c;font-weight:bold;padding:5px 10px;"
+);
+
+console.log(
+    "%c Authentication Gateway initialized.",
+    "color:#00ff88;"
+);
+
+console.log(
+    "%c Secure frontend channel ready.",
+    "color:#00eaff;"
+);
+
+console.log(
+    "%c Backend authentication required for real login.",
+    "color:#ffe600;"
+);
+
+
+// =========================================================
+// INITIAL STATUS
+// =========================================================
+
+setStatus(
+    "SYSTEM READY // AWAITING CREDENTIALS",
+    "info"
+);
