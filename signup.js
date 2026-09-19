@@ -1,107 +1,595 @@
-/* ==========================================================================
-   CR3CKA SECURITY — signup.js
-   ========================================================================== */
+"use strict";
 
-import { auth } from "./firebase-config.js";
+/*
+ * CR3CKA SECURITY
+ * Futuristic Signup Controller
+ *
+ * NOTE:
+ * This file handles client-side validation and UI.
+ * Real account creation must be performed by your backend.
+ */
 
-import {
-createUserWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-(function () {
-  'use strict';
+const $ = (selector) => document.querySelector(selector);
 
-  const form = document.getElementById('signup-form');
-  if (!form) return;
+/* -----------------------------------------
+   ELEMENTS
+----------------------------------------- */
 
-  const nameInput = document.getElementById('signup-name');
-  const userInput = document.getElementById('signup-username');
-  const emailInput = document.getElementById('signup-email');
-  const passInput = document.getElementById('signup-password');
-  const confirmInput = document.getElementById('signup-confirm');
-  const termsInput = document.getElementById('signup-terms');
-  const toggleBtn = document.getElementById('toggle-signup-password');
-  const submitBtn = document.getElementById('signup-submit');
-  const status = document.getElementById('signup-status');
-  const strengthMeter = document.getElementById('strength-meter');
-  const strengthLabel = document.getElementById('strength-label');
+const form = $("#signup-form");
 
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const isPassword = passInput.type === 'password';
-      passInput.type = isPassword ? 'text' : 'password';
-      confirmInput.type = isPassword ? 'text' : 'password';
-      toggleBtn.innerHTML = isPassword ? eyeOffIcon() : eyeIcon();
+const nameInput = $("#signup-name");
+const usernameInput = $("#signup-username");
+const emailInput = $("#signup-email");
+const passwordInput = $("#signup-password");
+const confirmInput = $("#signup-confirm");
+
+const termsInput = $("#signup-terms");
+
+const submitButton = $("#signup-submit");
+
+const statusBox = $("#signup-status");
+
+const googleButton = $("#google-signup");
+
+const passwordToggle = $("#toggle-signup-password");
+
+const strengthMeter = $("#strength-meter");
+const strengthLabel = $("#strength-label");
+
+/* -----------------------------------------
+   ERROR ELEMENTS
+----------------------------------------- */
+
+const errors = {
+    name: $("#signup-name-error"),
+    username: $("#signup-username-error"),
+    email: $("#signup-email-error"),
+    password: $("#signup-password-error"),
+    confirm: $("#signup-confirm-error"),
+    terms: $("#terms-error")
+};
+
+/* -----------------------------------------
+   UTILITY
+----------------------------------------- */
+
+function setError(element, message) {
+    if (element) {
+        element.textContent = message || "";
+    }
+}
+
+function clearErrors() {
+
+    Object.values(errors).forEach((element) => {
+        if (element) {
+            element.textContent = "";
+        }
     });
-  }
 
-  passInput.addEventListener('input', () => {
-    const score = scorePassword(passInput.value);
-    strengthMeter.className = 'strength-meter s' + score;
-    const labels = ['Too short', 'Weak', 'Fair', 'Good', 'Strong'];
-    strengthLabel.textContent = passInput.value ? labels[score] : '';
-  });
+    statusBox.textContent = "";
+    statusBox.className = "form-status";
+}
 
-  function scorePassword(pw) {
+function setStatus(message, type = "") {
+
+    statusBox.textContent = message;
+    statusBox.className = `form-status ${type}`;
+}
+
+/* -----------------------------------------
+   USERNAME
+----------------------------------------- */
+
+function validateUsername(username) {
+
+    if (!username) {
+        return "Username is required.";
+    }
+
+    if (username.length < 3) {
+        return "Minimum 3 characters required.";
+    }
+
+    if (username.length > 24) {
+        return "Maximum 24 characters allowed.";
+    }
+
+    if (!/^[a-zA-Z0-9_.-]+$/.test(username)) {
+        return "Use only letters, numbers, _, - or .";
+    }
+
+    return "";
+}
+
+/* -----------------------------------------
+   EMAIL
+----------------------------------------- */
+
+function validateEmail(email) {
+
+    if (!email) {
+        return "Email address is required.";
+    }
+
+    const pattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!pattern.test(email)) {
+        return "Enter a valid email address.";
+    }
+
+    return "";
+}
+
+/* -----------------------------------------
+   PASSWORD
+----------------------------------------- */
+
+function getPasswordScore(password) {
+
     let score = 0;
-    if (pw.length >= 8) score++;
-    if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
-    if (/\d/.test(pw)) score++;
-    if (/[^A-Za-z0-9]/.test(pw) && pw.length >= 10) score++;
-    return score;
-  }
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+    if (password.length >= 8) score++;
+    if (password.length >= 12) score++;
+
+    if (/[A-Z]/.test(password)) score++;
+
+    if (/[a-z]/.test(password)) score++;
+
+    if (/[0-9]/.test(password)) score++;
+
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    return Math.min(4, Math.ceil(score / 1.5));
+}
+
+function updatePasswordStrength() {
+
+    const password = passwordInput.value;
+
+    const segments =
+        strengthMeter.querySelectorAll(".seg");
+
+    segments.forEach((segment) => {
+
+        segment.style.background = "#16242b";
+        segment.style.boxShadow = "none";
+
+    });
+
+    if (!password) {
+
+        strengthLabel.textContent = "";
+
+        return;
+    }
+
+    const score = getPasswordScore(password);
+
+    let label = "";
+
+    if (score === 1) {
+        label = "VERY WEAK";
+    }
+
+    if (score === 2) {
+        label = "WEAK";
+    }
+
+    if (score === 3) {
+        label = "STRONG";
+    }
+
+    if (score === 4) {
+        label = "FORTRESS";
+    }
+
+    strengthLabel.textContent =
+        `PASSWORD SECURITY // ${label}`;
+
+    for (let i = 0; i < score; i++) {
+
+        segments[i].style.background =
+            "linear-gradient(90deg,#00ff88,#00d9ff)";
+
+        segments[i].style.boxShadow =
+            "0 0 8px rgba(0,255,136,.5)";
+    }
+}
+
+passwordInput.addEventListener(
+    "input",
+    updatePasswordStrength
+);
+
+/* -----------------------------------------
+   PASSWORD VISIBILITY
+----------------------------------------- */
+
+passwordToggle.addEventListener(
+    "click",
+    () => {
+
+        const visible =
+            passwordInput.type === "text";
+
+        passwordInput.type =
+            visible ? "password" : "text";
+
+        passwordToggle.textContent =
+            visible ? "◉" : "◎";
+    }
+);
+
+/* -----------------------------------------
+   FORM VALIDATION
+----------------------------------------- */
+
+function validateForm() {
+
+    clearErrors();
+
     let valid = true;
 
-    valid = validate(nameInput, nameInput.value.trim().length >= 2, 'Enter your full name') && valid;
-    valid = validate(userInput, /^[a-zA-Z0-9_]{3,20}$/.test(userInput.value.trim()), '3-20 characters: letters, numbers, underscore') && valid;
-    valid = validate(emailInput, /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim()), 'Enter a valid email address') && valid;
-    valid = validate(passInput, passInput.value.length >= 8, 'Password must be at least 8 characters') && valid;
-    valid = validate(confirmInput, confirmInput.value === passInput.value && passInput.value.length > 0, 'Passwords do not match') && valid;
+    const name =
+        nameInput.value.trim();
+
+    const username =
+        usernameInput.value.trim();
+
+    const email =
+        emailInput.value.trim();
+
+    const password =
+        passwordInput.value;
+
+    const confirm =
+        confirmInput.value;
+
+    /* NAME */
+
+    if (!name) {
+
+        setError(
+            errors.name,
+            "Full name is required."
+        );
+
+        valid = false;
+    }
+
+    /* USERNAME */
+
+    const usernameError =
+        validateUsername(username);
+
+    if (usernameError) {
+
+        setError(
+            errors.username,
+            usernameError
+        );
+
+        valid = false;
+    }
+
+    /* EMAIL */
+
+    const emailError =
+        validateEmail(email);
+
+    if (emailError) {
+
+        setError(
+            errors.email,
+            emailError
+        );
+
+        valid = false;
+    }
+
+    /* PASSWORD */
+
+    if (!password) {
+
+        setError(
+            errors.password,
+            "Password is required."
+        );
+
+        valid = false;
+
+    } else if (password.length < 8) {
+
+        setError(
+            errors.password,
+            "Password must contain at least 8 characters."
+        );
+
+        valid = false;
+    }
+
+    /* CONFIRM */
+
+    if (!confirm) {
+
+        setError(
+            errors.confirm,
+            "Confirm your password."
+        );
+
+        valid = false;
+
+    } else if (password !== confirm) {
+
+        setError(
+            errors.confirm,
+            "Passwords do not match."
+        );
+
+        valid = false;
+    }
+
+    /* TERMS */
 
     if (!termsInput.checked) {
-      document.getElementById('terms-error').textContent = 'You must accept the Terms to continue';
-      valid = false;
-    } else {
-      document.getElementById('terms-error').textContent = '';
+
+        setError(
+            errors.terms,
+            "Accept the Terms & Privacy Policy."
+        );
+
+        valid = false;
     }
 
-    if (!valid) {
-      status.textContent = 'Please correct the errors above.';
-      status.className = 'form-status error';
-      return;
+    return valid;
+}
+
+/* -----------------------------------------
+   FORM SUBMIT
+----------------------------------------- */
+
+form.addEventListener(
+    "submit",
+    async (event) => {
+
+        event.preventDefault();
+
+        if (!validateForm()) {
+
+            setStatus(
+                "ACCESS DENIED // CHECK INPUT PARAMETERS",
+                "error"
+            );
+
+            return;
+        }
+
+        submitButton.classList.add("loading");
+
+        submitButton.disabled = true;
+
+        setStatus(
+            "INITIALIZING SECURE IDENTITY..."
+        );
+
+        try {
+
+            /*
+             * IMPORTANT:
+             *
+             * Replace this simulation with your backend API:
+             *
+             * const response = await fetch("/api/auth/signup", {
+             *     method: "POST",
+             *     headers: {
+             *         "Content-Type": "application/json"
+             *     },
+             *     body: JSON.stringify({
+             *         name,
+             *         username,
+             *         email,
+             *         password
+             *     })
+             * });
+             *
+             * Never store raw passwords in frontend/localStorage.
+             */
+
+            await delay(1300);
+
+            setStatus(
+                "IDENTITY CREATED // REDIRECTING...",
+                "success"
+            );
+
+            /*
+             * Demo redirect.
+             * Change this after connecting your backend.
+             */
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "login.html";
+
+            }, 1200);
+
+        } catch (error) {
+
+            console.error(
+                "CR3CKA signup error:",
+                error
+            );
+
+            setStatus(
+                "SYSTEM ERROR // REQUEST FAILED",
+                "error"
+            );
+
+            submitButton.disabled = false;
+            submitButton.classList.remove("loading");
+        }
     }
+);
 
-    submitBtn.classList.add('loading');
-    submitBtn.disabled = true;
-    status.textContent = '';
+/* -----------------------------------------
+   GOOGLE SIGNUP
+----------------------------------------- */
 
-    setTimeout(() => {
-      submitBtn.classList.remove('loading');
-      submitBtn.disabled = false;
-      status.textContent = 'Account created — redirecting to sign in…';
-      status.className = 'form-status success';
-      setTimeout(() => { window.location.href = 'login.html'; }, 1000);
-    }, 1200);
-  });
+googleButton.addEventListener(
+    "click",
+    () => {
 
-  [nameInput, userInput, emailInput, passInput, confirmInput].forEach((el) => {
-    el.addEventListener('input', () => el.classList.remove('invalid'));
-  });
+        setStatus(
+            "GOOGLE AUTH // INITIALIZING OAUTH CHANNEL..."
+        );
 
-  function validate(input, condition, message) {
-    const errEl = document.getElementById(input.id + '-error');
-    input.classList.toggle('invalid', !condition);
-    input.classList.toggle('valid', condition);
-    if (errEl) errEl.textContent = condition ? '' : message;
-    return condition;
-  }
+        /*
+         * This is the UI integration point.
+         *
+         * For production:
+         *
+         * 1. Configure Google OAuth / Google Identity Services.
+         * 2. Obtain your Google Client ID.
+         * 3. Send the Google credential to your backend.
+         * 4. Verify the credential server-side.
+         * 5. Create/login the user server-side.
+         *
+         * Do NOT trust a client-side email/name as proof
+         * of authentication.
+         */
 
-  function eyeIcon() {
-    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
-  }
-  function eyeOffIcon() {
-    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.9 17.9A10.9 10.9 0 0112 20c-7 0-11-8-11-8a19.5 19.5 0 015.1-6.2M9.9 4.2A10.6 10.6 0 0112 4c7 0 11 8 11 8a19.6 19.6 0 01-3.3 4.4M14.1 14.1a3 3 0 11-4.2-4.2"/><path d="M1 1l22 22"/></svg>';
-  }
-})();
+        setTimeout(() => {
+
+            setStatus(
+                "GOOGLE AUTH READY // CONNECT OAUTH BACKEND",
+                "success"
+            );
+
+        }, 900);
+    }
+);
+
+/* -----------------------------------------
+   THEME TOGGLE
+----------------------------------------- */
+
+const themeToggle =
+    $("#theme-toggle");
+
+let lightMode = false;
+
+themeToggle.addEventListener(
+    "click",
+    () => {
+
+        lightMode = !lightMode;
+
+        if (lightMode) {
+
+            document.body.style.background =
+                "#eef5f3";
+
+            document.documentElement.style
+                .setProperty(
+                    "--text",
+                    "#07120d"
+                );
+
+            themeToggle.textContent = "☾";
+
+        } else {
+
+            document.body.style.background =
+                "#030609";
+
+            document.documentElement.style
+                .setProperty(
+                    "--text",
+                    "#eafff6"
+                );
+
+            themeToggle.textContent = "◐";
+        }
+    }
+);
+
+/* -----------------------------------------
+   TERMINAL-STYLE INPUT FEEDBACK
+----------------------------------------- */
+
+[
+    nameInput,
+    usernameInput,
+    emailInput,
+    passwordInput,
+    confirmInput
+].forEach((input) => {
+
+    input.addEventListener(
+        "focus",
+        () => {
+
+            setStatus(
+                `INPUT CHANNEL // ${input.id.toUpperCase()}`
+            );
+
+        }
+    );
+
+});
+
+/* -----------------------------------------
+   KEYBOARD SHORTCUT
+----------------------------------------- */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        /*
+         * Ctrl + Enter
+         * submits signup form.
+         */
+
+        if (
+            event.ctrlKey &&
+            event.key === "Enter"
+        ) {
+
+            form.requestSubmit();
+        }
+    }
+);
+
+/* -----------------------------------------
+   HELPER
+----------------------------------------- */
+
+function delay(milliseconds) {
+
+    return new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                milliseconds
+            )
+    );
+}
+
+/* -----------------------------------------
+   INITIAL BOOT
+----------------------------------------- */
+
+console.log(
+    "%c[ CR3CKA SECURITY ]",
+    "color:#00ff88;font-weight:bold;font-size:16px"
+);
+
+console.log(
+    "%cSECURE AUTHENTICATION NODE INITIALIZED",
+    "color:#00d9ff"
+);
+```
