@@ -3,13 +3,14 @@
 /*
  * =========================================================
  * CR3CKA SECURITY
- * Futuristic Login Controller
+ * LOGIN CONTROLLER
+ * =========================================================
+ *
+ * FRONTEND DEMO AUTHENTICATION
  *
  * IMPORTANT:
- * This file handles the login UI and client-side validation.
- *
- * REAL authentication MUST be performed by your backend.
- * Never store plaintext passwords in frontend JavaScript.
+ * This validates the form locally.
+ * Real password verification must be performed by backend.
  * =========================================================
  */
 
@@ -18,10 +19,11 @@
 // HELPERS
 // =========================================================
 
-const $ = (selector) => document.querySelector(selector);
+const $ = (selector) =>
+    document.querySelector(selector);
 
 const delay = (ms) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+    new Promise(resolve => setTimeout(resolve, ms));
 
 
 // =========================================================
@@ -30,34 +32,43 @@ const delay = (ms) =>
 
 const form = $("#login-form");
 
-const identityInput = $("#login-identity");
-const passwordInput = $("#login-password");
+const identityInput =
+    $("#login-identity");
 
-const rememberInput = $("#login-remember");
+const passwordInput =
+    $("#login-password");
 
-const submitButton = $("#login-submit");
+const rememberInput =
+    $("#login-remember");
 
-const googleButton = $("#google-login");
+const submitButton =
+    $("#login-submit");
 
-const passwordToggle = $("#toggle-login-password");
+const googleButton =
+    $("#google-login");
 
-const statusBox = $("#login-status");
+const passwordToggle =
+    $("#toggle-login-password");
+
+const statusBox =
+    $("#login-status");
 
 
 // =========================================================
-// STATUS SYSTEM
+// STATUS
 // =========================================================
 
 function setStatus(message, type = "info") {
 
     statusBox.textContent = message;
 
-    statusBox.className = `status ${type}`;
+    statusBox.className =
+        `status ${type}`;
 }
 
 
 // =========================================================
-// IDENTITY VALIDATION
+// VALIDATION
 // =========================================================
 
 function validateIdentity(value) {
@@ -76,10 +87,6 @@ function validateIdentity(value) {
 }
 
 
-// =========================================================
-// PASSWORD VALIDATION
-// =========================================================
-
 function validatePassword(value) {
 
     if (!value) {
@@ -95,279 +102,230 @@ function validatePassword(value) {
 
 
 // =========================================================
-// PASSWORD VISIBILITY
+// PASSWORD SHOW / HIDE
 // =========================================================
 
-passwordToggle.addEventListener("click", () => {
+passwordToggle.addEventListener(
+    "click",
+    () => {
 
-    const isPassword =
-        passwordInput.type === "password";
+        const hidden =
+            passwordInput.type === "password";
 
-    passwordInput.type =
-        isPassword ? "text" : "password";
+        passwordInput.type =
+            hidden ? "text" : "password";
 
-    passwordToggle.textContent =
-        isPassword ? "HIDE" : "SHOW";
-
-});
-
-
-// =========================================================
-// INPUT FEEDBACK
-// =========================================================
-
-identityInput.addEventListener("input", () => {
-
-    if (statusBox.classList.contains("error")) {
-        setStatus("");
+        passwordToggle.textContent =
+            hidden ? "HIDE" : "SHOW";
     }
-
-});
-
-
-passwordInput.addEventListener("input", () => {
-
-    if (statusBox.classList.contains("error")) {
-        setStatus("");
-    }
-
-});
+);
 
 
 // =========================================================
 // GOOGLE LOGIN
 // =========================================================
 
-googleButton.addEventListener("click", async () => {
-
-    setStatus(
-        "INITIALIZING GOOGLE AUTHENTICATION...",
-        "info"
-    );
-
-    googleButton.disabled = true;
-
-    await delay(700);
-
-    /*
-     * =====================================================
-     * REAL GOOGLE AUTHENTICATION
-     * =====================================================
-     *
-     * Replace this section with Google Identity Services
-     * or your backend OAuth endpoint.
-     *
-     * Example:
-     *
-     * window.location.href =
-     *     "/api/auth/google";
-     *
-     * Your backend should then:
-     *
-     * 1. Start Google OAuth
-     * 2. Receive Google's callback
-     * 3. Verify the identity server-side
-     * 4. Create/login the user
-     * 5. Establish a secure session
-     *
-     * NEVER put a Google Client Secret here.
-     */
-
-
-    setStatus(
-        "GOOGLE AUTH READY // OAUTH BACKEND REQUIRED",
-        "info"
-    );
-
-    googleButton.disabled = false;
-
-});
-
-
-// =========================================================
-// LOGIN PROCESS
-// =========================================================
-
-form.addEventListener("submit", async (event) => {
-
-    event.preventDefault();
-
-
-    const identity =
-        identityInput.value.trim();
-
-    const password =
-        passwordInput.value;
-
-
-    // ---------------------------------------------
-    // VALIDATE IDENTITY
-    // ---------------------------------------------
-
-    const identityError =
-        validateIdentity(identity);
-
-    if (identityError) {
+googleButton.addEventListener(
+    "click",
+    async () => {
 
         setStatus(
-            `✕ ${identityError}`,
+            "INITIALIZING GOOGLE AUTHENTICATION...",
+            "info"
+        );
+
+        googleButton.disabled = true;
+
+        await delay(700);
+
+        /*
+         * REAL GOOGLE OAUTH WILL GO HERE.
+         *
+         * Example:
+         *
+         * window.location.href =
+         *     "/api/auth/google";
+         */
+
+        setStatus(
+            "GOOGLE OAUTH BACKEND NOT CONNECTED",
             "error"
         );
 
-        identityInput.focus();
-
-        return;
+        googleButton.disabled = false;
     }
+);
 
 
-    // ---------------------------------------------
-    // VALIDATE PASSWORD
-    // ---------------------------------------------
+// =========================================================
+// LOGIN
+// =========================================================
 
-    const passwordError =
-        validatePassword(password);
+form.addEventListener(
+    "submit",
+    async (event) => {
 
-    if (passwordError) {
+        event.preventDefault();
+
+
+        const identity =
+            identityInput.value.trim();
+
+        const password =
+            passwordInput.value;
+
+
+        // -----------------------------------------
+        // IDENTITY CHECK
+        // -----------------------------------------
+
+        const identityError =
+            validateIdentity(identity);
+
+        if (identityError) {
+
+            setStatus(
+                `✕ ${identityError}`,
+                "error"
+            );
+
+            identityInput.focus();
+
+            return;
+        }
+
+
+        // -----------------------------------------
+        // PASSWORD CHECK
+        // -----------------------------------------
+
+        const passwordError =
+            validatePassword(password);
+
+        if (passwordError) {
+
+            setStatus(
+                `✕ ${passwordError}`,
+                "error"
+            );
+
+            passwordInput.focus();
+
+            return;
+        }
+
+
+        // -----------------------------------------
+        // AUTHENTICATION UI
+        // -----------------------------------------
+
+        submitButton.disabled = true;
+
+        submitButton.textContent =
+            "AUTHENTICATING...";
+
 
         setStatus(
-            `✕ ${passwordError}`,
-            "error"
+            "SCANNING CREDENTIALS...",
+            "info"
         );
 
-        passwordInput.focus();
+        await delay(700);
 
-        return;
+
+        setStatus(
+            "VERIFYING SECURE CHANNEL...",
+            "info"
+        );
+
+        await delay(700);
+
+
+        setStatus(
+            "✓ ACCESS GRANTED // REDIRECTING...",
+            "success"
+        );
+
+
+        submitButton.textContent =
+            "ACCESS GRANTED ✓";
+
+
+        // -----------------------------------------
+        // OPTIONAL SESSION FLAG
+        // -----------------------------------------
+
+        if (rememberInput.checked) {
+
+            sessionStorage.setItem(
+                "cr3cka_session",
+                "active"
+            );
+
+        }
+
+
+        /*
+         * -----------------------------------------
+         * REDIRECT TO DASHBOARD
+         * -----------------------------------------
+         */
+
+        await delay(900);
+
+        window.location.href =
+            "./dashboard.html";
     }
-
-
-    // ---------------------------------------------
-    // START AUTHENTICATION
-    // ---------------------------------------------
-
-    submitButton.disabled = true;
-
-    submitButton.textContent =
-        "AUTHENTICATING...";
-
-
-    setStatus(
-        "ESTABLISHING ENCRYPTED SESSION...",
-        "info"
-    );
-
-
-    await delay(900);
-
-
-    /*
-     * =====================================================
-     * REAL BACKEND LOGIN
-     * =====================================================
-     *
-     * Replace the simulation below with:
-     *
-     * const response = await fetch("/api/auth/login", {
-     *
-     *     method: "POST",
-     *
-     *     headers: {
-     *         "Content-Type": "application/json"
-     *     },
-     *
-     *     body: JSON.stringify({
-     *         identity,
-     *         password,
-     *         remember: rememberInput.checked
-     *     })
-     * });
-     *
-     * const data = await response.json();
-     *
-     * if (!response.ok) {
-     *     throw new Error(
-     *         data.message || "Authentication failed"
-     *     );
-     * }
-     *
-     * IMPORTANT:
-     * The backend should verify the password against a
-     * secure password hash such as Argon2id or bcrypt.
-     *
-     * Prefer an HttpOnly + Secure + SameSite session cookie
-     * instead of storing authentication tokens in localStorage.
-     * =====================================================
-     */
-
-
-    // -----------------------------------------------------
-    // DEMO RESPONSE
-    // -----------------------------------------------------
-
-    await delay(800);
-
-
-    setStatus(
-        "✓ AUTHENTICATION BACKEND NOT CONNECTED",
-        "info"
-    );
-
-
-    submitButton.disabled = false;
-
-    submitButton.textContent =
-        "INITIALIZE SECURE SESSION";
-
-});
+);
 
 
 // =========================================================
 // FORGOT PASSWORD
 // =========================================================
 
-$("#forgot-password").addEventListener("click", (event) => {
+const forgotPassword =
+    $("#forgot-password");
 
-    /*
-     * Change this URL when your backend recovery system
-     * is ready.
-     */
+if (forgotPassword) {
 
-    if (
-        !event.currentTarget.getAttribute("href") ||
-        event.currentTarget.getAttribute("href") === "#"
-    ) {
+    forgotPassword.addEventListener(
+        "click",
+        () => {
 
-        event.preventDefault();
+            /*
+             * Replace with your actual
+             * password recovery page.
+             */
 
-        setStatus(
-            "PASSWORD RECOVERY MODULE OFFLINE",
-            "error"
-        );
+            console.log(
+                "Password recovery requested"
+            );
+        }
+    );
+}
 
+
+// =========================================================
+// CTRL + ENTER
+// =========================================================
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.ctrlKey &&
+            event.key === "Enter"
+        ) {
+
+            form.requestSubmit();
+        }
     }
-
-});
-
-
-// =========================================================
-// ENTER / CTRL + ENTER
-// =========================================================
-
-document.addEventListener("keydown", (event) => {
-
-    if (
-        event.key === "Enter" &&
-        event.ctrlKey
-    ) {
-
-        form.requestSubmit();
-
-    }
-
-});
+);
 
 
 // =========================================================
-// SECURITY-STYLE BOOT LOG
+// BOOT LOG
 // =========================================================
 
 console.log(
@@ -376,23 +334,18 @@ console.log(
 );
 
 console.log(
-    "%c Authentication Gateway initialized.",
+    "%c AUTHENTICATION GATEWAY ONLINE",
     "color:#00ff88;"
 );
 
 console.log(
-    "%c Secure frontend channel ready.",
+    "%c DASHBOARD REDIRECT ENABLED",
     "color:#00eaff;"
-);
-
-console.log(
-    "%c Backend authentication required for real login.",
-    "color:#ffe600;"
 );
 
 
 // =========================================================
-// INITIAL STATUS
+// READY
 // =========================================================
 
 setStatus(
