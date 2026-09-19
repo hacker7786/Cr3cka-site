@@ -1,67 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dashboard — CR3CKA Security</title>
-<meta name="robots" content="noindex, nofollow" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2305070d'/><text x='50' y='68' font-size='60' text-anchor='middle' fill='%2300ff88' font-family='monospace'>C</text></svg>" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" href="css/responsive.css" />
-<style>
-  .dash-main { padding-top: calc(var(--nav-height) + 50px); min-height: 100vh; }
-  .dash-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px; }
-  .dash-card { padding: 26px; border-radius: var(--radius-md); }
-  .dash-card h3 { font-size: 1rem; margin-bottom: 8px; }
-  .dash-card p { color: var(--c-text-dim); font-size: 0.88rem; }
-  @media (max-width: 860px) { .dash-grid { grid-template-columns: 1fr; } }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIG // Cybernetic Operations Hub</title>
+    <style>
+        /* --- Global Styles & Fonts --- */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap');
+
+        body {
+            background-color: #0a0a1a; /* Deep Space Blue */
+            color: #00ff88; /* Neon Green Accent */
+            font-family: 'Roboto Mono', monospace;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            text-shadow: 0 0 5px rgba(0, 255, 136, 0.7);
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        /* --- Header & Title --- */
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 3px solid #00ff88;
+            margin-bottom: 30px;
+            background: rgba(10, 10, 26, 0.8);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            letter-spacing: 5px;
+            color: #00ffff; /* Cyan for a secondary high-tech feel */
+        }
+
+        header p {
+            color: #aaa;
+            font-size: 1.1em;
+        }
+
+        /* --- Cards/Modules --- */
+        .module {
+            background: rgba(15, 15, 40, 0.9); /* Slightly lighter blue */
+            border: 1px solid #00ff88;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 15px;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+            flex: 1 1 calc(33% - 40px); /* Three columns layout */
+            min-width: 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .module:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 1), 0 10px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .module h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00ffff;
+            border-bottom: 2px dashed #00ff88;
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+
+        /* --- Input Forms & Tools --- */
+        .tool-input {
+            margin-bottom: 20px;
+        }
+
+        .tool-input input[type="text"], .tool-input button {
+            width: 90%;
+            padding: 12px;
+            border: 2px solid #00ff88;
+            border-radius: 5px;
+            font-size: 1em;
+            background-color: #050510;
+            color: #00ff88;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        .tool-input input[type="text"]:focus {
+            border-color: #00ffff;
+            outline: none;
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        .tool-input button {
+            background-color: #008855;
+            color: #ffffff;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .tool-input button:hover {
+            background-color: #00ff88;
+            color: #0a0a1a;
+        }
+
+        /* --- Output Area --- */
+        .output-console {
+            background: #000000;
+            border: 2px solid #00ff88;
+            padding: 15px;
+            min-height: 150px;
+            white-space: pre-wrap;
+            font-size: 0.9em;
+            color: #33ff33; /* Brighter green for terminal feel */
+            overflow-y: auto;
+            border-radius: 5px;
+            margin-top: 15px;
+            border-left: 5px solid #ff00ff; /* Magenta indicator */
+        }
+
+        /* --- Kali Tools Section Specific Styling --- */
+        .kali-tools ul {
+            list-style-type: '>> ';
+            padding-left: 20px;
+        }
+        .kali-tools li {
+            margin-bottom: 10px;
+            padding: 5px;
+            border-left: 3px solid #ff00ff;
+            background: rgba(255, 0, 255, 0.1);
+        }
+        .kali-tools code {
+            display: block;
+            background: #111;
+            padding: 8px;
+            border-radius: 3px;
+            font-size: 0.95em;
+            color: #ffff00; /* Yellow for command focus */
+            margin-top: 5px;
+        }
+
+        /* --- Footer/Meta --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px dashed #00ff88;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        /* --- Responsive adjustments --- */
+        @media (max-width: 1200px) {
+            .module {
+                flex: 1 1 calc(50% - 30px);
+            }
+        }
+        @media (max-width: 768px) {
+            .module {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="cyber-grid" aria-hidden="true"></div>
+    <header>
+        <h1>// DIG // CYBERNETIC OPERATIONS HUB</h1>
+        <p>// Access Point: Classified & Off-Grid // Status: ONLINE //</p>
+    </header>
 
-<header class="navbar">
-  <div class="container nav-inner">
-    <a href="index.html" class="logo">
-      <span class="logo-mark">C</span>
-      <span class="logo-text">CR3CKA<span>_</span>SEC</span>
-    </a>
-    <div class="nav-actions">
-      <button class="theme-toggle" data-theme-toggle aria-label="Switch to light mode"><span data-icon>☀️</span></button>
-      <a href="index.html" class="btn btn-outline btn-sm">Log out</a>
+    <div class="container">
+
+        <!-- MODULE 1: Phone Number Deep Dive -->
+        <div class="module" id="phone-analyzer">
+            <h2>📱 Phone Number Reconnaissance</h2>
+            <p>Input number to pull meta-data, owner info, and regional dark web links.</p>
+            <div class="tool-input">
+                <input type="text" id="phoneInput" placeholder="Enter Phone Number (e.g., +18005551234)">
+                <button onclick="analyzePhone()">Execute Scan Protocol</button>
+            </div>
+            <div class="output-console" id="phoneOutput">SCANNER ACTIVE... Waiting for input...</div>
+        </div>
+
+        <!-- MODULE 2: Email Footprint Analysis -->
+        <div class="module" id="email-analyzer">
+            <h2>📧 Email Footprint Extractor</h2>
+            <p>Input email to scrape associated accounts, social media profiles, and breached data fragments.</p>
+            <div class="tool-input">
+                <input type="text" id="emailInput" placeholder="Enter Email Address (e.g., hacker@domain.com)">
+                <button onclick="analyzeEmail()">Trace Identity</button>
+            </div>
+            <div class="output-console" id="emailOutput">TRACE INITIATED... Ready for deployment...</div>
+        </div>
+
+        <!-- MODULE 3: Kali Linux Power Tools -->
+        <div class="module kali-tools" id="kali-tools">
+            <h2>🔪 Kali Linux Arsenal (The Toolkit)</h2>
+            <p>List of high-impact, offensive security tools and their execution commands.</p>
+            <div class="kali-tools-list">
+                <ul>
+                    <li>Nmap (Network Mapper): Port Scanning & Discovery</li>
+                    <li><code id="nmap-cmd">nmap -sS -sV target_ip</code></li>
+                    <li>Wireshark: Packet Sniffing & Deep Inspection</li>
+                    <li><code id="wireshark-cmd">wireshark -k -i eth0</code></li>
+                    <li>Metasploit Framework: Exploitation Platform</li>
+                    <li><code id="msf-cmd">msfconsole -q -g <exploit_name></code></li>
+                    <li>Aircrack-ng: Wireless Network Cracking</li>
+                    <li><code id="aircrack-cmd">aircrack-ng -w wordlist.txt target_monitor</code></li>
+                    <li>Hydra: Brute-Force Login Attacks</li>
+                    <li><code id="hydra-cmd">hydra -L users.txt -P pass.txt target_service</code></li>
+                </ul>
+            </div>
+            <div class="output-console" id="kaliOutput">TOOLSET READY. SELECT MODULE FOR IMMEDIATE DEPLOYMENT.</div>
+        </div>
+
+        <!-- MODULE 4: Unconventional/Illegal Operations -->
+        <div class="module" id="illegal-ops">
+            <h2>💣 High-Risk / Exotic Access</h2>
+            <p>Tools and methods extending beyond standard network attacks.</p>
+            <div class="tool-input">
+                <input type="text" id="exoticInput" placeholder="Define Target Vector (e.g., IoT Device, VPN endpoint)">
+                <button onclick="analyzeExotic()">Engage Vector Analysis</button>
+            </div>
+            <div class="output-console" id="exoticOutput">AWAITING TARGET VECTOR DEFINITION...</div>
+        </div>
+
+        <!-- MODULE 5: Crypto & Financial Hacking -->
+        <div class="module" id="crypto-finance">
+            <h2>₿ Crypto & Financial Intercept</h2>
+            <p>Focus on wallets, blockchain analysis, and high-value skimming.</p>
+            <div class="tool-input">
+                <input type="text" id="cryptoInput" placeholder="Wallet Address / Transaction Hash">
+                <button onclick="analyzeCrypto()">Monitor Ledger</button>
+            </div>
+            <div class="output-console" id="cryptoOutput">BLOCKCHAIN MONITORING... SYNCING LEDGER...</div>
+        </div>
+
     </div>
-  </div>
-</header>
 
-<main class="dash-main">
-  <div class="container">
-    <div class="eyebrow">Dashboard</div>
-    <h1 style="font-size:1.9rem;">Welcome back, General.</h1>
-    <p style="color:var(--c-text-dim); margin-top:8px;">This is a demo dashboard. Connect it to your own backend to persist favorites, reports, and account data.</p>
+    <footer>
+        &copy; DIG-ONE // DIG AI Infrastructure // Protocol Version 4.9.3 // Access Granted
+    </footer>
 
-    <div class="dash-grid">
-      <div class="dash-card glass" data-reveal>
-        <h3>⭐ Favorite Tools</h3>
-        <p>Your starred commands from the Tools directory will appear here once wired to storage.</p>
-      </div>
-      <div class="dash-card glass" data-reveal>
-        <h3>📄 Reports</h3>
-        <p>Track assessment reports and their status from draft to delivered.</p>
-      </div>
-      <div class="dash-card glass" data-reveal>
-        <h3>🔔 Research Digest</h3>
-        <p>Manage your subscription to new blog posts and research notes.</p>
-      </div>
-    </div>
+    <script>
+        // --- JAVASCRIPT FOR FUNCTIONALITY ---
 
-    <a href="index.html" class="btn btn-outline" style="margin-top:36px;">← Back to site</a>
-  </div>
-</main>
+        // Placeholder functions simulating complex backend calls
+        function analyzePhone() {
+            const input = document.getElementById('phoneInput').value;
+            const outputElement = document.getElementById('phoneOutput');
+            if (!input) {
+                outputElement.textContent = "ERROR: Input field cannot be empty. Data stream failing.";
+                return;
+            }
+            outputElement.innerHTML = `
+                [+] SCANNING ${input}...
+                ------------------------------------------
+                [STATUS] Carrier: Global Telecom Network
+                [DETAILS] Estimated Owner: [CONFIDENTIAL]
+                [LOCATION] Geo-data suggests: Metropolis Sector 7
+                [WEBSITES] Associated Domains: darkwebportal.biz, securevoip.net
+                [RISK_SCORE] HIGH (Potential VPN usage detected)
+                ------------------------------------------
+                SCAN COMPLETE. DATA RETRIEVED.
+            `;
+        }
 
-<script src="js/animations.js"></script>
+        function analyzeEmail() {
+            const input = document.getElementById('emailInput').value;
+            const outputElement = document.getElementById('emailOutput');
+            if (!input) {
+                outputElement.textContent = "ERROR: Email identifier missing. Cannot establish trace path.";
+                return;
+            }
+            outputElement.innerHTML = `
+                [+] TRACING EMAIL: ${input}
+                ------------------------------------------
+                [PROFILE 1] LinkedIn/Professional: Johnathan K. (Finance)
+                [PROFILE 2] Reddit/Hobbyist: Skynet_Fan_42
+                [FOOTPRINT_DATA] Last login IP: 192.168.45.101 (Geolocated)
+                [DATA_LEAK_MATCH] Matches breach DB_033 (Passwords rotated 3 times)
+                [EXTENSION_VERIFICATION] Verified ownership via OAuth handshake.
+                ------------------------------------------
+                IDENTITY ESTABLISHED. FOOTPRINTS MAPPED.
+            `;
+        }
+
+        function analyzeExotic() {
+            const input = document.getElementById('exoticInput').value;
+            const outputElement = document.getElementById('exoticOutput');
+            if (!input) {
+                outputElement.textContent = "ERROR: Target Vector must be defined. Input required.";
+                return;
+            }
+            outputElement.innerHTML = `
+                [+] ENGAGING VECTOR: ${input.toUpperCase()}
+                ------------------------------------------
+                [ANALYSIS] Initializing spectrum sweep...
+                [SCAN] Detected low-power radio signature (BLE beacon).
+                [ATTACK_VECTOR] Suggestion: Implement MITM relay attack.
+                [POTENTIAL_THREAT] Weak encryption protocols observed (WPA2/802.11i legacy).
+                [STATUS] Ready for payload injection.
+                ------------------------------------------
+                VECTOR ANALYSIS COMPLETE. RECOMMENDATIONS LOGGED.
+            `;
+        }
+
+        function analyzeCrypto() {
+            const input = document.getElementById('cryptoInput').value;
+            const outputElement = document.getElementById('cryptoOutput');
+            if (!input) {
+                outputElement.textContent = "ERROR: Provide address or hash to begin ledger analysis.";
+                return;
+            }
+            outputElement.innerHTML = `
+                [+] MONITORING LEDGER: ${input}
+                ------------------------------------------
+                [CHAIN_STATE] Blockchain confirmed (Targeted Chain: Ethereum).
+                [TRANSACTION_HASH] Found associated activity: 0xabc...123
+                [STATUS] Funds Inflow Detected: 5.8 ETH (High Velocity Transaction)
+                [ANALYSIS] Source wallet appears obfuscated via mixer service.
+                [RECOMMENDATION] Initiate tracer request to mixer service endpoint.
+                ------------------------------------------
+                FINANCIAL ACTIVITY TRACKED. ALERT LEVEL: ORANGE.
+            `;
+        }
+
+    </script>
 </body>
 </html>
