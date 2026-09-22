@@ -1,0 +1,47 @@
+/* ==========================================================================
+   RESPONSIVE — breakpoints layered on top of style.css
+   ========================================================================== */
+
+@media (max-width: 1100px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .terminal { max-width: 560px; }
+  .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .gh-grid, .project-grid, .blog-grid { grid-template-columns: repeat(2, 1fr); }
+  .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 860px) {
+  .nav-links { position: fixed; top: var(--nav-height); left: 0; right: 0; bottom: 0;
+    flex-direction: column; align-items: stretch; gap: 2px; padding: 20px;
+    background: rgba(5,7,13,0.98); backdrop-filter: blur(20px);
+    transform: translateX(100%); transition: transform var(--t-med) var(--ease);
+    overflow-y: auto;
+  }
+  [data-theme='light'] .nav-links { background: rgba(245,247,250,0.98); }
+  .nav-links.open { transform: translateX(0); }
+  .nav-links a { padding: 14px 16px; font-size: 1rem; border-bottom: 1px solid var(--c-border); }
+  .nav-toggle { display: flex; }
+  .nav-actions .btn-outline.hide-mobile { display: none; }
+
+  section { padding: 70px 0; }
+  .hero { min-height: auto; padding-top: calc(var(--nav-height) + 40px); padding-bottom: 60px; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-stats { justify-content: space-between; }
+
+  .form-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .feature-grid, .gh-grid, .project-grid, .blog-grid, .roadmap-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .tools-toolbar { flex-direction: column; align-items: stretch; }
+  .tools-search { max-width: none; }
+  #back-to-top { right: 16px; bottom: 16px; }
+  .terminal-body { font-size: 0.78rem; }
+}
