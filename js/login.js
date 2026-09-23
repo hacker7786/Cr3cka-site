@@ -238,43 +238,27 @@ form.addEventListener(
             "info"
         );
 
-        await delay(700);
+        const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+        email: identity,
+        password: password
+    });
 
+if (error) {
+    setStatus(`✕ ${error.message}`, "error");
+    submitButton.disabled = false;
+    submitButton.textContent =
+        "INITIALIZE SECURE SESSION";
+    return;
+}
 
-        setStatus(
-            "✓ ACCESS GRANTED // REDIRECTING...",
-            "success"
-        );
+setStatus(
+    "✓ ACCESS GRANTED // REDIRECTING...",
+    "success"
+);
 
-
-        submitButton.textContent =
-            "ACCESS GRANTED ✓";
-
-
-        // -----------------------------------------
-        // OPTIONAL SESSION FLAG
-        // -----------------------------------------
-
-        if (rememberInput.checked) {
-
-            sessionStorage.setItem(
-                "cr3cka_session",
-                "active"
-            );
-
-        }
-
-
-        /*
-         * -----------------------------------------
-         * REDIRECT TO DASHBOARD
-         * -----------------------------------------
-         */
-
-        await delay(900);
-
-        window.location.href =
-            "./dashboard.html";
+window.location.href =
+    "./dashboard.html";
     }
 );
 
