@@ -215,47 +215,80 @@ form.addEventListener(
         }
 
 
-        // -----------------------------------------
-        // AUTHENTICATION UI
-        // -----------------------------------------
+// -----------------------------------------
+// SUPABASE AUTHENTICATION
+// -----------------------------------------
 
-        submitButton.disabled = true;
-
-        submitButton.textContent =
-            "AUTHENTICATING...";
-
-
-        setStatus(
-            "SCANNING CREDENTIALS...",
-            "info"
-        );
-
-        await delay(700);
-
-
-        setStatus(
-            "VERIFYING SECURE CHANNEL...",
-            "info"
-        );
-
-        const { data, error } =
-    await supabaseClient.auth.signInWithPassword({
-        email: identity,
-        password: password
-    });
-
-if (error) {
-    setStatus(`✕ ${error.message}`, "error");
-    submitButton.disabled = false;
-    submitButton.textContent =
-        "INITIALIZE SECURE SESSION";
-    return;
-}
+submitButton.disabled = true;
+submitButton.textContent = "AUTHENTICATING...";
 
 setStatus(
-    "✓ ACCESS GRANTED // REDIRECTING...",
-    "success"
+    "AUTHENTICATING WITH SECURE NODE...",
+    "info"
 );
+
+try {
+
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+            email: identity,
+            password: password
+        });
+
+    if (error) {
+
+        console.error(
+            "CR3CKA Supabase login error:",
+            error
+        );
+
+        setStatus(
+            `✕ ${error.message}`,
+            "error"
+        );
+
+        submitButton.disabled = false;
+        submitButton.textContent =
+            "INITIALIZE SECURE SESSION";
+
+        return;
+    }
+
+    console.log(
+        "CR3CKA authenticated user:",
+        data.user
+    );
+
+    setStatus(
+        "✓ ACCESS GRANTED // REDIRECTING...",
+        "success"
+    );
+
+    submitButton.textContent =
+        "ACCESS GRANTED ✓";
+
+    await delay(800);
+
+    window.location.href =
+        "./dashboard.html";
+
+} catch (error) {
+
+    console.error(
+        "CR3CKA authentication error:",
+        error
+    );
+
+    setStatus(
+        "✕ AUTHENTICATION SYSTEM ERROR",
+        "error"
+    );
+
+    submitButton.disabled = false;
+
+    submitButton.textContent =
+        "INITIALIZE SECURE SESSION";
+}
 
 window.location.href =
     "./dashboard.html";
