@@ -290,8 +290,6 @@ try {
         "INITIALIZE SECURE SESSION";
 }
 
-window.location.href =
-    "./dashboard.html";
     }
 );
 
