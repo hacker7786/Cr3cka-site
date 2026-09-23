@@ -619,4 +619,3 @@ console.log(
     "%cSECURE AUTHENTICATION NODE INITIALIZED",
     "color:#00d9ff"
 );
-```
