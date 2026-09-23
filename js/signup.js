@@ -397,25 +397,52 @@ form.addEventListener(
              * Never store raw passwords in frontend/localStorage.
              */
 
-            await delay(1300);
+            const name = nameInput.value.trim();
+const username = usernameInput.value.trim();
+const email = emailInput.value.trim();
+const password = passwordInput.value;
 
-            setStatus(
-                "IDENTITY CREATED // REDIRECTING...",
-                "success"
-            );
+const { data, error } = await supabaseClient.auth.signUp({
+    email: email,
+    password: password,
 
-            /*
-             * Demo redirect.
-             * Change this after connecting your backend.
-             */
+    options: {
+        data: {
+            full_name: name,
+            username: username
+        },
 
-            setTimeout(() => {
+        emailRedirectTo:
+            window.location.origin + "/login.html"
+    }
+});
 
-                window.location.href =
-                    "login.html";
+if (error) {
+    console.error("Supabase signup error:", error);
 
-            }, 1200);
+    setStatus(
+        `✕ SIGNUP FAILED // ${error.message}`,
+        "error"
+    );
 
+    submitButton.disabled = false;
+    submitButton.classList.remove("loading");
+
+    return;
+}
+
+console.log("Supabase signup:", data);
+
+setStatus(
+    "✓ IDENTITY CREATED // CHECK YOUR EMAIL",
+    "success"
+);
+
+submitButton.disabled = true;
+
+setTimeout(() => {
+    window.location.href = "login.html";
+}, 2000);
         } catch (error) {
 
             console.error(
