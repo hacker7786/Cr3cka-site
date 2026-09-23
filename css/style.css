@@ -538,32 +538,3 @@ section { padding: 100px 0; position: relative; }
 }
 #back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
 #back-to-top:hover { box-shadow: var(--glow-primary); }
-.logout-btn{
-    width:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    margin-top:18px;
-    padding:11px 12px;
-    border:1px solid rgba(255,70,100,.28);
-    border-radius:8px;
-    background:rgba(255,70,100,.06);
-    color:#ff6b81;
-    cursor:pointer;
-    font:700 11px 'JetBrains Mono';
-    letter-spacing:.5px;
-    transition:.2s ease;
-}
-
-.logout-btn:hover{
-    background:rgba(255,70,100,.12);
-    border-color:rgba(255,70,100,.5);
-    box-shadow:0 0 18px rgba(255,70,100,.12);
-    color:#ff8a9b;
-}
-
-.logout-btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
